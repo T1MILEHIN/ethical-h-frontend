@@ -1,11 +1,10 @@
 import { FaGoogle } from "react-icons/fa"
 import { Link } from "react-router-dom"
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { motion } from "framer-motion"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Toaster, toast } from 'sonner';
-import { useNavigate, Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
