@@ -72,10 +72,10 @@ const Register = () => {
             }   
         }
     })
-    const { handleSubmit, handleChange, handleBlur, values, touched, errors, isSubmitting, isValidating, resetForm } = useFormik({
+    const { handleSubmit, handleChange, handleBlur, values, touched, errors, resetForm } = useFormik({
         initialValues: {
-            username: '',
             email: '',
+            username: '',
             firstname: '',
             lastname: '',
             password: '',
@@ -90,7 +90,6 @@ const Register = () => {
     });
 
     useEffect(() => {
-        console.log(Object.keys(errors));
         Object.keys(errors).forEach((field) => {
           if (errors[field]) {
             toast.error(errors[field]);
@@ -105,13 +104,8 @@ const Register = () => {
                     <Loader />
                 </div>
             }
-            <Toaster position="top-center"
-                toastOptions={{
-                    style: { color: 'white', background: 'black', border: "none" },
-                    className: 'my-toast',
-                }} />
             <motion.section className="overflow-hidden min-h-screen flex items-end md:items-center justify-center">
-                <div className="bg-white overflow-hidden w-full md:w-[500px] shadow-2xl md:py-4 md:px-4 p-8 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-3xl">
+                <div className="bg-white overflow-hidden w-full md:w-[400px] shadow-2xl md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-3xl">
                     <div className="flex items-center justify-between">
                         <div className="font-medium text-xl">ETHICAL HACKING</div>
                     </div>

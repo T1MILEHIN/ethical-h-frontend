@@ -73,11 +73,11 @@ const Login = () => {
                     style: { color: 'white', background: '#6868c7', border: "none" },
                     className: 'my-toast',
                 }} />
-            <motion.section className="overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-center justify-center">
-                <div className={` mx-auto shadow-2xl w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent rounded-3xl`}>
+            <motion.section className="overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
+                <div className={` mx-auto shadow-2xl w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-3xl`}>
                     <div className="flex items-center justify-center md:justify-between">
-                        <div className='font-medium text-xl'>
-                            F.F.O
+                        <div className='font-bold text-xl'>
+                            ETHICAL-H
                         </div>
                     </div>
                     <p className="font-normal">Welcome Back!</p>
