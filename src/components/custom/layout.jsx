@@ -41,7 +41,6 @@ Layout.displayName = 'Layout'
 
 const Header = React.forwardRef(
     ({ className, sticky, ...props }, ref) => {
-        // Check if Layout.Header is used within Layout
         const contextVal = React.useContext(LayoutContext)
         if (contextVal === null) {
             throw new Error(
@@ -96,7 +95,7 @@ export { Layout }
 
 Layout.propTypes = {
     className: PropTypes.any,
-    fixed: PropTypes.boolean,
+    fixed: PropTypes.func,
 }
 
 Header.propTypes = {

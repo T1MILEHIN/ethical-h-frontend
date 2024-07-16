@@ -38,7 +38,7 @@ const Login = () => {
                     localStorage.setItem("tokens", JSON.stringify(response.data));
                     localStorage.setItem("user", JSON.stringify(decoded));
                     navigate("/")
-                    toast.success("Welcome to F.F.0")
+                    toast.success("Welcome to ETHICAL-H")
                     setLoading(false)
                 }
             } catch (error) {
@@ -74,7 +74,7 @@ const Login = () => {
                     className: 'my-toast',
                 }} />
             <motion.section className="overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
-                <div className={` mx-auto shadow-2xl w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-3xl`}>
+                <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-md`}>
                     <div className="flex items-center justify-center md:justify-between">
                         <div className='font-bold text-xl'>
                             ETHICAL-H
@@ -86,7 +86,7 @@ const Login = () => {
                         <div className="my-4">
                             <label className="font-" htmlFor="email">Email
                                 <div className="relative">
-                                    <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border-2 border-black placeholder:font-light" placeholder='1234567@gmail.com' />
+                                    <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border border-black placeholder:font-light" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
@@ -94,7 +94,7 @@ const Login = () => {
                         <div className="my-4">
                             <label className="font-" htmlFor="password">Password
                                 <div className="relative">
-                                    <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border-2 border-black placeholder:font-light" placeholder='Password' />
+                                    <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border border-black placeholder:font-light" placeholder='Password' />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>

@@ -6,12 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { useMutation } from '@tanstack/react-query';
 import Loader from "../../components/loader";
+
+import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
 
 const api_register = import.meta.env.VITE_BACKEND_REGISTER;
 
@@ -47,7 +49,7 @@ const optionalInputs = {
 const Register = () => {
     const navigate = useNavigate();
     const [optional, setOptional] = useState(false)
-    const [loading, setLoading ] = useState(false)
+    const [loading, setLoading] = useState(false)
     const validationSchema = Yup.object({
         username: Yup.string().min(5, 'Must be 5 characters or more').required('Enter Your Username'),
         firstname: Yup.string(),
@@ -57,7 +59,7 @@ const Register = () => {
         confirmpassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required("please provide a password"),
     })
     const registerMutaton = useMutation({
-        mutationFn: async(data) => {
+        mutationFn: async (data) => {
             setLoading(true)
             try {
                 const response = await axios.post(api_register, data)
@@ -69,7 +71,7 @@ const Register = () => {
             } catch (error) {
                 setLoading(false)
                 toast.error(error?.response?.data?.detail)
-            }   
+            }
         }
     })
     const { handleSubmit, handleChange, handleBlur, values, touched, errors, resetForm } = useFormik({
@@ -91,12 +93,12 @@ const Register = () => {
 
     useEffect(() => {
         Object.keys(errors).forEach((field) => {
-          if (errors[field]) {
-            toast.error(errors[field]);
-          }
+            if (errors[field]) {
+                toast.error(errors[field]);
+            }
         });
-      }, [errors, touched])
-    
+    }, [errors, touched])
+
     return (
         <>
             {(loading) && 
@@ -105,13 +107,13 @@ const Register = () => {
                 </div>
             }
             <motion.section className="overflow-hidden min-h-screen flex items-end md:items-center justify-center">
-                <div className="bg-white overflow-hidden w-full md:w-[400px] shadow-2xl md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-3xl">
+                <div className="bg-white overflow-hidden w-full md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
                     <div className="flex items-center justify-between">
-                        <div className="font-medium text-xl">ETHICAL HACKING</div>
+                        <div className="font-bold text-xl">ETHICAL-H</div>
                     </div>
                     <p className="font-normal">Please fill in your details to get started</p>
                     <form onSubmit={handleSubmit}>
-                        <div className="my-2">
+                        <div className="my-4">
                             <label className="font-light" htmlFor="username">
                                 Username
                                 <div className="relative">
@@ -122,14 +124,14 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.username}
-                                        className={`text-base pl-2 h-10 rounded-xl w-full border-2 ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
+                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
                                         placeholder="Enter Your Username"
                                     />
                                     {(touched.username && errors.username) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.username &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-2">
+                        <div className="my-4">
                             <label className="font-light" htmlFor="email">
                                 Email Address
                                 <div className="relative">
@@ -140,14 +142,14 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        className={`text-base pl-2 h-10 rounded-xl w-full border-2 ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
+                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
                                         placeholder="Enter Your Email"
                                     />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-2">
+                        <div className="my-4">
                             <label className="font-light" htmlFor="password">
                                 Password
                                 <div className="relative">
@@ -158,14 +160,14 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password}
-                                        className={`text-base pl-2 h-10 rounded-xl w-full border-2 ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
+                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
                                         placeholder="Enter Your Password"
                                     />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-2">
+                        <div className="my-4">
                             <label className="font-light" htmlFor="confirmpassword">
                                 Confirm-password
                                 <div className="relative">
@@ -176,20 +178,20 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.confirmpassword}
-                                        className={`text-base pl-2 h-10 rounded-xl w-full border-2 ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
+                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
                                         placeholder="Confirm Your Password"
                                     />
                                     {(touched.confirmpassword && errors.confirmpassword) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.confirmpassword &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <p onClickCapture={() => setOptional(prev => !prev)} className="cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-2">
+                        <p onClickCapture={() => setOptional(prev => !prev)} className="cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-4">
                             Optional Information {optional ? <FaChevronUp /> : <FaChevronDown size={10} />}
                         </p>
                         <AnimatePresence>
                             {optional &&
                                 <motion.div variants={optionalVariant} animate={optional ? "animate" : "initial"} exit="exit" className="origin-top overflow-hidden">
-                                    <motion.div variants={optionalInputs} className="my-2">
+                                    <motion.div variants={optionalInputs} className="my-4">
                                         <label className="font-light" htmlFor="first_name">
                                             First Name
                                             <input
@@ -199,11 +201,11 @@ const Register = () => {
                                                 value={values.firstname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className={`text-base pl-2 h-10 rounded-xl w-full border-2 border-black`}
+                                                className={`text-base pl-2 h-10 rounded-md w-full border border-black`}
                                             />
                                         </label>
                                     </motion.div>
-                                    <motion.div variants={optionalInputs} className="my-2">
+                                    <motion.div variants={optionalInputs} className="my-4">
                                         <label className="font-light" htmlFor="last-name">
                                             Last Name
                                             <input
@@ -213,7 +215,7 @@ const Register = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 value={values.lastname}
-                                                className={`text-base pl-2 h-10 rounded-xl w-full border-2 border-black`}
+                                                className={`text-base pl-2 h-10 rounded-md w-full border border-black`}
                                             />
                                         </label>
                                     </motion.div>
