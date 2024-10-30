@@ -58,7 +58,7 @@ export const useTheme = () => {
 }
 
 ThemeProvider.propTypes = {
-    children: PropTypes.any,
-    defaultTheme: PropTypes.any,
-    storageKey: PropTypes.any,
+  children: PropTypes.any,
+  defaultTheme: PropTypes.any,
+  storageKey: PropTypes.any,
 }

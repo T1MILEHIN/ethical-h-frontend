@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext'
 import { Layout } from '../../components/custom/layout'
 import { Button } from '../../components/ui/button'
@@ -20,7 +20,7 @@ import { Overview } from './components/overview'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
-  if (!user) return <Navigate to="/register" />
+  // if (!user) return <Navigate to="/register" />
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -59,7 +59,7 @@ const Home = () => {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Total Revenue
+                    WALLET
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -76,9 +76,6 @@ const Home = () => {
                 </CardHeader>
                 <CardContent>
                   <div className='text-2xl font-bold'>$45,231.89</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +20.1% from last month
-                  </p>
                 </CardContent>
               </Card>
               <Card>
@@ -102,33 +99,9 @@ const Home = () => {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+2350</div>
+                  <div className='text-2xl font-bold'>0</div>
                   <p className='text-xs text-muted-foreground'>
-                    +180.1% from last month
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>Sales</CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <rect width='20' height='14' x='2' y='5' rx='2' />
-                    <path d='M2 10h20' />
-                  </svg>
-                </CardHeader>
-                <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +19% from last month
+                    You have not subscribe to any package
                   </p>
                 </CardContent>
               </Card>
@@ -158,27 +131,7 @@ const Home = () => {
                 </CardContent>
               </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
-              <Card className='col-span-1 lg:col-span-4'>
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className='pl-2'>
-                  <Overview />
-                </CardContent>
-              </Card>
-              <Card className='col-span-1 lg:col-span-3'>
-                <CardHeader>
-                  <CardTitle>Recent Sales</CardTitle>
-                  <CardDescription>
-                    You made 265 sales this month.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RecentSales />
-                </CardContent>
-              </Card>
-            </div>
+            <Outlet />
           </TabsContent>
         </Tabs>
       </Layout.Body>

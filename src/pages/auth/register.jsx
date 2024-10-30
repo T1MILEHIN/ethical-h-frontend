@@ -13,9 +13,9 @@ import axios from "axios";
 import { useMutation } from '@tanstack/react-query';
 import Loader from "../../components/loader";
 
-import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-
 const api_register = import.meta.env.VITE_BACKEND_REGISTER;
+
+const url_access = import.meta.env.VITE_universal_access
 
 const optionalVariant = {
     initial: {

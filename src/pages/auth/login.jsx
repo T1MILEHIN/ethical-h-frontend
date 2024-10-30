@@ -85,7 +85,7 @@ const Login = () => {
                         <div className="my-4">
                             <label className="font-" htmlFor="email">Email
                                 <div className="relative">
-                                    <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border border-black placeholder:font-light" placeholder='1234567@gmail.com' />
+                                    <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
@@ -93,7 +93,7 @@ const Login = () => {
                         <div className="my-4">
                             <label className="font-" htmlFor="password">Password
                                 <div className="relative">
-                                    <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border border-black placeholder:font-light" placeholder='Password' />
+                                    <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='Password' />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
