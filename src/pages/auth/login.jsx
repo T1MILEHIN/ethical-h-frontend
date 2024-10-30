@@ -72,40 +72,42 @@ const Login = () => {
                     style: { color: 'white', background: '#6868c7', border: "none" },
                     className: 'my-toast',
                 }} />
-            <motion.section className="overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
+            <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
                 <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-md`}>
                     <div className="flex items-center justify-center md:justify-between">
-                        <div className='font-bold text-xl'>
+                        <div className='font-bold text-xl text-white'>
                             ETHICAL-H
                         </div>
                     </div>
-                    <p className="font-normal">Welcome Back!</p>
-                    <p className="text-sm md:text-base text-slate-700 font-normal">Enter Your details to continue</p>
+                    <p className="font-normal text-blue-500 my-1">Welcome Back!</p>
+                    <p className="text-sm text-white font-normal jost">Enter Your details to continue</p>
                     <form onSubmit={handleSubmit}>
-                        <div className="my-4">
-                            <label className="font-" htmlFor="email">Email
+                        <div className="my-2">
+                            <label className="font-" htmlFor="email">
+                                <p className="text-white">Email</p>
                                 <div className="relative">
                                     <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-4">
-                            <label className="font-" htmlFor="password">Password
+                        <div className="my-2">
+                            <label className="font-" htmlFor="password">
+                                <p className="text-white">Password</p>
                                 <div className="relative">
                                     <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='Password' />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <p className="text-right my-4 font-"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
-                        <button type="submit" className="w-full rounded-xl hover:text-black border-2 hover:bg-transparent border-black duration-300 bg-black py-2 font-semibold text-white text-xl md:text-2xl">{"Login"}</button>
+                        <p className="text-right my-1 font-medium text-white"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
+                        <button type="submit" className="w-full flex items-center justify-center rounded-md border-2 hover:bg-white hover:text-black border-black duration-300 bg-black py-2 font-medium text-white text-base md:text-lg mb-2">{"Login"}</button>
                         <p className='text-center font-extralight py-1'>or</p>
                     </form>
                     <div className='login-options flex flex-col gap-3 font-medium'>
                         <button className='flex items-center justify-center gap-2 border-[1px] border-black rounded-3xl py-2 bg-black text-white hover:bg-black hover:text-white duration-300'><FaGoogle />Continue with Google</button>
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-semibold ">Don&apos;t have an account? <Link className="underline underline-offset-2 text-black" to="/register">Create Account</Link></p>
+                    <p className="text-sm md:text-base mt-4 font-semibold text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
                 </div>
             </motion.section>
         </>

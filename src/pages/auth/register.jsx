@@ -12,6 +12,7 @@ import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { useMutation } from '@tanstack/react-query';
 import Loader from "../../components/loader";
+import BG from '../../assets/images/form-bg.jpg'
 
 const api_register = import.meta.env.VITE_BACKEND_REGISTER;
 
@@ -112,16 +113,16 @@ const Register = () => {
                     <Loader />
                 </div>
             }
-            <motion.section className="overflow-hidden min-h-screen flex items-end md:items-center justify-center">
-                <div className="bg-white overflow-hidden w-full md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
+            <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
+                <div className="bg-red-500 overflow-hidden w-full md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
                     <div className="flex items-center justify-between">
-                        <div className="font-bold text-xl">ETHICAL-H</div>
+                        <div className="text-2xl font-bold tracking-tight text-white">ETHICAL-H</div>
                     </div>
-                    <p className="font-normal">Please fill in your details to get started</p>
+                    <p className="text-sm font-normal text-white my-1 jost">Please fill in your details to get started</p>
                     <form onSubmit={handleFormSubmit}>
                         <div className="">
                             <label className="font-light" htmlFor="username">
-                                Username
+                                <p className="text-white">Username</p>
                                 <div className="relative">
                                     <input
                                         name="username"
@@ -139,7 +140,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="email">
-                                Email Address
+                                <p className="text-white">Email Address</p>
                                 <div className="relative">
                                     <input
                                         type="text"
@@ -157,7 +158,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="password">
-                                Password
+                                <p className="text-white">Password</p>
                                 <div className="relative">
                                     <input
                                         name="password"
@@ -175,7 +176,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="confirmpassword">
-                                Confirm-password
+                                <p className="text-white">Confirm-password</p>
                                 <div className="relative">
                                     <input
                                         name="confirmpassword"
@@ -191,7 +192,7 @@ const Register = () => {
                                 </div>
                             </label>
                         </div>
-                        <p onClickCapture={() => setOptional(prev => !prev)} className="cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-2">
+                        <p onClickCapture={() => setOptional(prev => !prev)} className="text-white cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-2">
                             Optional Information {optional ? <FaChevronUp /> : <FaChevronDown size={10} />}
                         </p>
                         <AnimatePresence>
@@ -199,7 +200,7 @@ const Register = () => {
                                 <motion.div variants={optionalVariant} animate={optional ? "animate" : "initial"} exit="exit" className="origin-top overflow-hidden">
                                     <motion.div variants={optionalInputs} className="">
                                         <label className="font-light" htmlFor="first_name">
-                                            First Name
+                                            <p className="text-white">First Name</p>
                                             <input
                                                 name="firstname"
                                                 type="text"
@@ -213,7 +214,7 @@ const Register = () => {
                                     </motion.div>
                                     <motion.div variants={optionalInputs} className="my-2">
                                         <label className="font-light" htmlFor="last-name">
-                                            Last Name
+                                            <p className="text-white">Last Name</p>
                                             <input
                                                 name="lastname"
                                                 type="text"
@@ -229,22 +230,22 @@ const Register = () => {
                         </AnimatePresence>
                         <button
                             type={"submit"}
-                            className="w-full flex items-center justify-center rounded-md hover:text-black border-2 hover:bg-transparent border-black duration-300 bg-black py-2 font-semibold text-white text-base md:text-2xl mb-2"
+                            className="w-full flex items-center justify-center rounded-md border-2 hover:bg-white hover:text-black border-black duration-300 bg-black py-2 font-medium text-white text-base md:text-lg mb-2"
                         >
                             Create Account
                             {/* {isSubmitting ? <span className="loading loading-dots loading-lg"></span> : "Create Account"} */}
                         </button>
                     </form>
                     <div className="login-options flex flex-col gap-3 font-medium">
-                        <button className="flex items-center justify-center gap-2 border-[1px] border-black rounded-md py-2 hover:bg-black hover:text-white duration-300">
+                        <button className="flex items-center justify-center gap-2 border-[1px] border-black rounded-md py-2 hover:bg-black hover:text-white text-white duration-300">
                             <FaGoogle />
                             Continue with Google
                         </button>
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-semibold ">
+                    <p className="text-sm md:text-base mt-4 font-semibold text-white jost">
                         Already have an account?{" "}
                         <Link
-                            className="underline underline-offset-2 text-black"
+                            className="underline underline-offset-2 text-blue-400"
                             to="/login"
                         >
                             Log In

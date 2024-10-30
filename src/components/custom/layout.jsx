@@ -86,6 +86,7 @@ const Body = React.forwardRef(({ className, ...props }, ref) => {
         />
     )
 })
+
 Body.displayName = 'Body'
 
 Layout.Header = Header
