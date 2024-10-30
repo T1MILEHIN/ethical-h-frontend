@@ -74,7 +74,7 @@ const Register = () => {
             }
         }
     })
-    const { handleSubmit, handleChange, handleBlur, values, touched, errors, resetForm } = useFormik({
+    const { handleSubmit, handleChange, handleBlur, values, touched, errors, resetForm, validateForm } = useFormik({
         initialValues: {
             email: '',
             username: '',
@@ -91,14 +91,20 @@ const Register = () => {
         },
     });
 
-    useEffect(() => {
-        Object.keys(errors).forEach((field) => {
-            if (errors[field]) {
-                toast.error(errors[field]);
-            }
-        });
-    }, [errors, touched])
-
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        const errors = await validateForm();
+        if (errors) {
+            Object.keys(errors).forEach((field) => {
+                if (errors[field]) {
+                    toast.error(errors[field]);
+                }
+            });
+        }
+        else {
+            handleSubmit();
+        }
+    };
     return (
         <>
             {(loading) && 
@@ -112,8 +118,8 @@ const Register = () => {
                         <div className="font-bold text-xl">ETHICAL-H</div>
                     </div>
                     <p className="font-normal">Please fill in your details to get started</p>
-                    <form onSubmit={handleSubmit}>
-                        <div className="my-4">
+                    <form onSubmit={handleFormSubmit}>
+                        <div className="">
                             <label className="font-light" htmlFor="username">
                                 Username
                                 <div className="relative">
@@ -124,14 +130,14 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.username}
-                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
+                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
                                         placeholder="Enter Your Username"
                                     />
                                     {(touched.username && errors.username) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.username &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-4">
+                        <div className="my-2">
                             <label className="font-light" htmlFor="email">
                                 Email Address
                                 <div className="relative">
@@ -142,14 +148,14 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
+                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
                                         placeholder="Enter Your Email"
                                     />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-4">
+                        <div className="my-2">
                             <label className="font-light" htmlFor="password">
                                 Password
                                 <div className="relative">
@@ -160,14 +166,14 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password}
-                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
+                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
                                         placeholder="Enter Your Password"
                                     />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <div className="my-4">
+                        <div className="my-2">
                             <label className="font-light" htmlFor="confirmpassword">
                                 Confirm-password
                                 <div className="relative">
@@ -178,20 +184,20 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.confirmpassword}
-                                        className={`text-base pl-2 h-10 rounded-md w-full border ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
+                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
                                         placeholder="Confirm Your Password"
                                     />
                                     {(touched.confirmpassword && errors.confirmpassword) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.confirmpassword &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
-                        <p onClickCapture={() => setOptional(prev => !prev)} className="cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-4">
+                        <p onClickCapture={() => setOptional(prev => !prev)} className="cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-2">
                             Optional Information {optional ? <FaChevronUp /> : <FaChevronDown size={10} />}
                         </p>
                         <AnimatePresence>
                             {optional &&
                                 <motion.div variants={optionalVariant} animate={optional ? "animate" : "initial"} exit="exit" className="origin-top overflow-hidden">
-                                    <motion.div variants={optionalInputs} className="my-4">
+                                    <motion.div variants={optionalInputs} className="">
                                         <label className="font-light" htmlFor="first_name">
                                             First Name
                                             <input
@@ -205,7 +211,7 @@ const Register = () => {
                                             />
                                         </label>
                                     </motion.div>
-                                    <motion.div variants={optionalInputs} className="my-4">
+                                    <motion.div variants={optionalInputs} className="my-2">
                                         <label className="font-light" htmlFor="last-name">
                                             Last Name
                                             <input
@@ -223,14 +229,14 @@ const Register = () => {
                         </AnimatePresence>
                         <button
                             type={"submit"}
-                            className="w-full flex items-center justify-center rounded-xl hover:text-black border-2 hover:bg-transparent border-black duration-300 bg-black py-2 font-semibold text-white text-base md:text-2xl mb-2"
+                            className="w-full flex items-center justify-center rounded-md hover:text-black border-2 hover:bg-transparent border-black duration-300 bg-black py-2 font-semibold text-white text-base md:text-2xl mb-2"
                         >
                             Create Account
                             {/* {isSubmitting ? <span className="loading loading-dots loading-lg"></span> : "Create Account"} */}
                         </button>
                     </form>
                     <div className="login-options flex flex-col gap-3 font-medium">
-                        <button className="flex items-center justify-center gap-2 border-[1px] border-black rounded-3xl py-2 hover:bg-black hover:text-white duration-300">
+                        <button className="flex items-center justify-center gap-2 border-[1px] border-black rounded-md py-2 hover:bg-black hover:text-white duration-300">
                             <FaGoogle />
                             Continue with Google
                         </button>
