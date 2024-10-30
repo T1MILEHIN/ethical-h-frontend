@@ -4,9 +4,7 @@ import axios from "axios"
 import { jwtDecode } from "jwt-decode"
 
 
-export const AuthContext = createContext({
-
-});
+export const AuthContext = createContext({});
 
 
 const AuthProvider = ({children})=> {

@@ -18,7 +18,7 @@ import { UserNav } from '../../components/userNav';
 
 const Home = () => {
   const { user } = useContext(AuthContext)
-  // if (!user) return <Navigate to="/register" />
+  if (!user) return <Navigate to="/register" />
   return (
     <Layout>
       {/* ===== Top Heading ===== */}

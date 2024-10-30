@@ -14,6 +14,10 @@ import { jwtDecode } from "jwt-decode"
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { PasswordInput } from "../../components/custom/password-input";
+
 const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 
 
@@ -58,7 +62,7 @@ const Login = () => {
         }
     })
     
-    // if (user) return <Navigate to="/" />
+    if (user) return <Navigate to="/" />
 
     return (
         <>
@@ -86,7 +90,7 @@ const Login = () => {
                             <label className="font-" htmlFor="email">
                                 <p className="text-white">Email</p>
                                 <div className="relative">
-                                    <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='1234567@gmail.com' />
+                                    <Input name="email" id="email" value={values.email} onChange={handleChange} type="text" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
@@ -95,13 +99,13 @@ const Login = () => {
                             <label className="font-" htmlFor="password">
                                 <p className="text-white">Password</p>
                                 <div className="relative">
-                                    <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='Password' />
+                                    <PasswordInput name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
                         <p className="text-right my-1 font-medium text-white"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
-                        <button type="submit" className="w-full flex items-center justify-center rounded-md border-2 hover:bg-white hover:text-black border-black duration-300 bg-black py-2 font-medium text-white text-base md:text-lg mb-2">{"Login"}</button>
+                        <Button type="submit" className="w-full">{"Login"}</Button>
                         <p className='text-center font-extralight py-1'>or</p>
                     </form>
                     <div className='login-options flex flex-col gap-3 font-medium'>
