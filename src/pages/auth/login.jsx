@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Toaster, toast } from 'sonner';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Navigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
@@ -13,7 +13,7 @@ import Loader from "../../components/loader";
 import { jwtDecode } from "jwt-decode"
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
-
+import ThemeSwitch from "../../components/theme-switch";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
@@ -24,14 +24,12 @@ const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 const Login = () => {
     const navigate = useNavigate()
     const {user, setUser, setToken} = useContext(AuthContext)
-    const [loading, setLoading ] = useState(false)
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Enter Your Email Address'),
         password: Yup.string().required("Enter Your Password")
     })
     const loginMutation = useMutation({
         mutationFn: async (data) => {
-            setLoading(true)
             try {
                 const response = await axios.post(api_login, data);
                 if (response.status === 200) {
@@ -42,16 +40,14 @@ const Login = () => {
                     localStorage.setItem("user", JSON.stringify(decoded));
                     navigate("/")
                     toast.success("Welcome to ETHICAL-H")
-                    setLoading(false)
                 }
             } catch (error) {
                 toast.error(error?.response?.data?.detail)
-                setLoading(false)
             }
         }
     })
 
-    const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+    const { handleSubmit, handleChange, values, touched, errors, is } = useFormik({
         initialValues: {
             email: "",
             password: ""
@@ -66,7 +62,7 @@ const Login = () => {
 
     return (
         <>
-            {(loading) &&
+            {(loginMutation.isPending) &&
                 <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
                     <Loader />
                 </div>
@@ -78,10 +74,11 @@ const Login = () => {
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
                 <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-md`}>
-                    <div className="flex items-center justify-center md:justify-between">
+                    <div className="flex items-center md:justify-between">
                         <div className='font-bold text-xl text-white'>
                             ETHICAL-H
                         </div>
+                        <ThemeSwitch />
                     </div>
                     <p className="font-normal text-blue-500 my-1">Welcome Back!</p>
                     <p className="text-sm text-white font-normal jost">Enter Your details to continue</p>
@@ -111,7 +108,7 @@ const Login = () => {
                     <div className='login-options flex flex-col gap-3 font-medium'>
                         <button className='flex items-center justify-center gap-2 border-[1px] border-black rounded-3xl py-2 bg-black text-white hover:bg-black hover:text-white duration-300'><FaGoogle />Continue with Google</button>
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-semibold text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
+                    <p className="text-sm md:text-base mt-4 font-medium text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
                 </div>
             </motion.section>
         </>

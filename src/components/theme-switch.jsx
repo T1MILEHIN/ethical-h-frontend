@@ -18,7 +18,7 @@ export default function ThemeSwitch() {
             className='rounded-full'
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
-            {theme === 'light' ? <IconMoon size={20} /> : <IconSun size={20} />}
+            {theme === 'light' ? <IconMoon size={20} color='blue' /> : <IconSun size={20} color='gold' />}
         </Button>
     )
 }

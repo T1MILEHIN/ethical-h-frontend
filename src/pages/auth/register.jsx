@@ -11,8 +11,8 @@ import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { useMutation } from '@tanstack/react-query';
+import ThemeSwitch from "../../components/theme-switch";
 import Loader from "../../components/loader";
-
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
@@ -51,7 +51,6 @@ const optionalInputs = {
 const Register = () => {
     const navigate = useNavigate();
     const [optional, setOptional] = useState(false)
-    const [loading, setLoading] = useState(false)
     const validationSchema = Yup.object({
         username: Yup.string().min(5, 'Must be 5 characters or more').required('Enter Your Username'),
         firstname: Yup.string(),
@@ -62,16 +61,13 @@ const Register = () => {
     })
     const registerMutaton = useMutation({
         mutationFn: async (data) => {
-            setLoading(true)
             try {
                 const response = await axios.post(api_register, data)
                 if (response.status === 201) {
                     toast.success("Welcome fellow hacker");
-                    setLoading(false)
                     navigate("/login");
                 }
             } catch (error) {
-                setLoading(false)
                 toast.error(error?.response?.data?.detail)
             }
         }
@@ -109,7 +105,7 @@ const Register = () => {
     };
     return (
         <>
-            {(loading) && 
+            {(registerMutaton.isPending) && 
                 <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
                     <Loader />
                 </div>
@@ -118,6 +114,7 @@ const Register = () => {
                 <div className="bg-red-500 overflow-hidden w-full md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
                     <div className="flex items-center justify-between">
                         <div className="text-2xl font-bold tracking-tight text-white">ETHICAL-H</div>
+                        <ThemeSwitch  />
                     </div>
                     <p className="text-sm font-normal text-white my-1 jost">Please fill in your details to get started</p>
                     <form onSubmit={handleFormSubmit}>
@@ -238,7 +235,7 @@ const Register = () => {
                             Continue with Google
                         </button>
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-semibold text-white jost">
+                    <p className="text-sm md:text-base mt-4 font-medium text-white jost">
                         Already have an account?{" "}
                         <Link
                             className="underline underline-offset-2 text-blue-400"
