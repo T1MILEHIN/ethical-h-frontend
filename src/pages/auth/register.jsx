@@ -191,7 +191,7 @@ const Register = () => {
                                     {(touched.confirmpassword && errors.confirmpassword) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.confirmpassword &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
-                        </div>
+                        </div>-0
                         <p onClickCapture={() => setOptional(prev => !prev)} className="text-white cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-2">
                             Optional Information {optional ? <FaChevronUp /> : <FaChevronDown size={10} />}
                         </p>

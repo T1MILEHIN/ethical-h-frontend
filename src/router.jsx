@@ -4,6 +4,8 @@ import Home from "./pages/home/home";
 import Landing from "./pages/home/components/landing";
 import Register from "./pages/auth/register";
 import Login from "./pages/auth/login";
+import FacebookLogin from "./Utility/FacebookLogin";
+import FacebookSignup from "./Utility/FacebookSignup";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />
     },
+    {
+        path: "/facebook",
+        element: <FacebookLogin />
+    },
+
+    {path:"/facebook-account",
+    element: <FacebookSignup/>
+},
 ]);
 
 export default router;
