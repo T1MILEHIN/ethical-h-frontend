@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Toaster, toast } from 'sonner';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Navigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
@@ -13,6 +13,10 @@ import Loader from "../../components/loader";
 import { jwtDecode } from "jwt-decode"
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
+import ThemeSwitch from "../../components/theme-switch";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { PasswordInput } from "../../components/custom/password-input";
 
 const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 
@@ -20,14 +24,12 @@ const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 const Login = () => {
     const navigate = useNavigate()
     const {user, setUser, setToken} = useContext(AuthContext)
-    const [loading, setLoading ] = useState(false)
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Enter Your Email Address'),
         password: Yup.string().required("Enter Your Password")
     })
     const loginMutation = useMutation({
         mutationFn: async (data) => {
-            setLoading(true)
             try {
                 const response = await axios.post(api_login, data);
                 if (response.status === 200) {
@@ -38,16 +40,14 @@ const Login = () => {
                     localStorage.setItem("user", JSON.stringify(decoded));
                     navigate("/")
                     toast.success("Welcome to ETHICAL-H")
-                    setLoading(false)
                 }
             } catch (error) {
                 toast.error(error?.response?.data?.detail)
-                setLoading(false)
             }
         }
     })
 
-    const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+    const { handleSubmit, handleChange, values, touched, errors, is } = useFormik({
         initialValues: {
             email: "",
             password: ""
@@ -58,11 +58,11 @@ const Login = () => {
         }
     })
     
-    // if (user) return <Navigate to="/" />
+    if (user) return <Navigate to="/" />
 
     return (
         <>
-            {(loading) &&
+            {(loginMutation.isPending) &&
                 <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
                     <Loader />
                 </div>
@@ -74,10 +74,11 @@ const Login = () => {
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
                 <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-md`}>
-                    <div className="flex items-center justify-center md:justify-between">
+                    <div className="flex items-center md:justify-between">
                         <div className='font-bold text-xl text-white'>
                             ETHICAL-H
                         </div>
+                        <ThemeSwitch />
                     </div>
                     <p className="font-normal text-blue-500 my-1">Welcome Back!</p>
                     <p className="text-sm text-white font-normal jost">Enter Your details to continue</p>
@@ -86,7 +87,7 @@ const Login = () => {
                             <label className="font-" htmlFor="email">
                                 <p className="text-white">Email</p>
                                 <div className="relative">
-                                    <input name="email" id="email" value={values.email} onChange={handleChange} type="text" className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='1234567@gmail.com' />
+                                    <Input name="email" id="email" value={values.email} onChange={handleChange} type="text" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
@@ -95,19 +96,19 @@ const Login = () => {
                             <label className="font-" htmlFor="password">
                                 <p className="text-white">Password</p>
                                 <div className="relative">
-                                    <input type="password" name="password" id="password" value={values.password} onChange={handleChange} className="text-base pl-2 h-10 rounded-md w-full border border-black" placeholder='Password' />
+                                    <PasswordInput name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
                         <p className="text-right my-1 font-medium text-white"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
-                        <button type="submit" className="w-full flex items-center justify-center rounded-md border-2 hover:bg-white hover:text-black border-black duration-300 bg-black py-2 font-medium text-white text-base md:text-lg mb-2">{"Login"}</button>
+                        <Button type="submit" className="w-full">{"Login"}</Button>
                         <p className='text-center font-extralight py-1'>or</p>
                     </form>
                     <div className='login-options flex flex-col gap-3 font-medium'>
                         <button className='flex items-center justify-center gap-2 border-[1px] border-black rounded-3xl py-2 bg-black text-white hover:bg-black hover:text-white duration-300'><FaGoogle />Continue with Google</button>
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-semibold text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
+                    <p className="text-sm md:text-base mt-4 font-medium text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
                 </div>
             </motion.section>
         </>

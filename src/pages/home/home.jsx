@@ -18,7 +18,9 @@ import { UserNav } from '../../components/userNav';
 
 const Home = () => {
   const { user } = useContext(AuthContext)
-  // if (!user) return <Navigate to="/register" />
+
+  if (!user) return <Navigate to="/register" />
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -35,9 +37,9 @@ const Home = () => {
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-          <div className='flex items-center space-x-2'>
+          {/* <div className='flex items-center space-x-2'>
             <Button>Download</Button>
-          </div>
+          </div> */}
         </div>
         <Tabs
           orientation='vertical'

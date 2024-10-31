@@ -11,12 +11,13 @@ import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import axios from "axios";
 import { useMutation } from '@tanstack/react-query';
+import ThemeSwitch from "../../components/theme-switch";
 import Loader from "../../components/loader";
-import BG from '../../assets/images/form-bg.jpg'
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { PasswordInput } from "../../components/custom/password-input";
 
 const api_register = import.meta.env.VITE_BACKEND_REGISTER;
-
-const url_access = import.meta.env.VITE_universal_access
 
 const optionalVariant = {
     initial: {
@@ -50,7 +51,6 @@ const optionalInputs = {
 const Register = () => {
     const navigate = useNavigate();
     const [optional, setOptional] = useState(false)
-    const [loading, setLoading] = useState(false)
     const validationSchema = Yup.object({
         username: Yup.string().min(5, 'Must be 5 characters or more').required('Enter Your Username'),
         firstname: Yup.string(),
@@ -61,16 +61,13 @@ const Register = () => {
     })
     const registerMutaton = useMutation({
         mutationFn: async (data) => {
-            setLoading(true)
             try {
                 const response = await axios.post(api_register, data)
                 if (response.status === 201) {
                     toast.success("Welcome fellow hacker");
-                    setLoading(false)
                     navigate("/login");
                 }
             } catch (error) {
-                setLoading(false)
                 toast.error(error?.response?.data?.detail)
             }
         }
@@ -108,7 +105,7 @@ const Register = () => {
     };
     return (
         <>
-            {(loading) && 
+            {(registerMutaton.isPending) && 
                 <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
                     <Loader />
                 </div>
@@ -117,6 +114,7 @@ const Register = () => {
                 <div className="bg-red-500 overflow-hidden w-full md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
                     <div className="flex items-center justify-between">
                         <div className="text-2xl font-bold tracking-tight text-white">ETHICAL-H</div>
+                        <ThemeSwitch  />
                     </div>
                     <p className="text-sm font-normal text-white my-1 jost">Please fill in your details to get started</p>
                     <form onSubmit={handleFormSubmit}>
@@ -124,14 +122,14 @@ const Register = () => {
                             <label className="font-light" htmlFor="username">
                                 <p className="text-white">Username</p>
                                 <div className="relative">
-                                    <input
+                                    <Input
                                         name="username"
                                         type="text"
                                         id="username"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.username}
-                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
+                                        className={` ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
                                         placeholder="Enter Your Username"
                                     />
                                     {(touched.username && errors.username) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.username &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -142,14 +140,14 @@ const Register = () => {
                             <label className="font-light" htmlFor="email">
                                 <p className="text-white">Email Address</p>
                                 <div className="relative">
-                                    <input
+                                    <Input
                                         type="text"
                                         name="email"
                                         id="email"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
+                                        className={` ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
                                         placeholder="Enter Your Email"
                                     />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -160,14 +158,14 @@ const Register = () => {
                             <label className="font-light" htmlFor="password">
                                 <p className="text-white">Password</p>
                                 <div className="relative">
-                                    <input
+                                    <PasswordInput
                                         name="password"
                                         type="password"
                                         id="password"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password}
-                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
+                                        className={` ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
                                         placeholder="Enter Your Password"
                                     />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -178,14 +176,14 @@ const Register = () => {
                             <label className="font-light" htmlFor="confirmpassword">
                                 <p className="text-white">Confirm-password</p>
                                 <div className="relative">
-                                    <input
+                                    <PasswordInput
                                         name="confirmpassword"
                                         type="password"
                                         id="confirmpassword"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.confirmpassword}
-                                        className={`text-base pl-2 h-10 rounded-sm w-full border ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
+                                        className={` ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
                                         placeholder="Confirm Your Password"
                                     />
                                     {(touched.confirmpassword && errors.confirmpassword) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.confirmpassword &&  <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -201,40 +199,35 @@ const Register = () => {
                                     <motion.div variants={optionalInputs} className="">
                                         <label className="font-light" htmlFor="first_name">
                                             <p className="text-white">First Name</p>
-                                            <input
+                                            <Input
                                                 name="firstname"
                                                 type="text"
                                                 id="firstname"
                                                 value={values.firstname}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                className={`text-base pl-2 h-10 rounded-md w-full border border-black`}
                                             />
                                         </label>
                                     </motion.div>
                                     <motion.div variants={optionalInputs} className="my-2">
                                         <label className="font-light" htmlFor="last-name">
                                             <p className="text-white">Last Name</p>
-                                            <input
+                                            <Input
                                                 name="lastname"
                                                 type="text"
                                                 id="lastname"
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 value={values.lastname}
-                                                className={`text-base pl-2 h-10 rounded-md w-full border border-black`}
                                             />
                                         </label>
                                     </motion.div>
                                 </motion.div>}
                         </AnimatePresence>
-                        <button
-                            type={"submit"}
-                            className="w-full flex items-center justify-center rounded-md border-2 hover:bg-white hover:text-black border-black duration-300 bg-black py-2 font-medium text-white text-base md:text-lg mb-2"
-                        >
+                        <Button type={"submit"} className="w-full mb-2">
                             Create Account
                             {/* {isSubmitting ? <span className="loading loading-dots loading-lg"></span> : "Create Account"} */}
-                        </button>
+                        </Button>
                     </form>
                     <div className="login-options flex flex-col gap-3 font-medium">
                         <button className="flex items-center justify-center gap-2 border-[1px] border-black rounded-md py-2 hover:bg-black hover:text-white text-white duration-300">
@@ -242,7 +235,7 @@ const Register = () => {
                             Continue with Google
                         </button>
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-semibold text-white jost">
+                    <p className="text-sm md:text-base mt-4 font-medium text-white jost">
                         Already have an account?{" "}
                         <Link
                             className="underline underline-offset-2 text-blue-400"
