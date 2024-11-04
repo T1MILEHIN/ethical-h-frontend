@@ -72,7 +72,7 @@ const Register = () => {
                     navigate("/login");
                 }
             } catch (error) {
-                toast.error(error?.response?.data?.detail)
+                toast.error(error?.message)
             }
         }
     })
@@ -86,17 +86,23 @@ const Register = () => {
             confirmpassword: ''
         },
         validationSchema,
-        onSubmit: values => {
-            console.log(values)
-            registerMutaton.mutate(values)
-            resetForm();
+        onSubmit: async(value) => {
+            const formData = new FormData();
+            formData.append("email", value.email)
+            formData.append("username", value.username)
+            formData.append("firstname", value.firstname)
+            formData.append("lastname", value.lastname)
+            formData.append("password", value.password)
+            registerMutaton.mutate(formData)
         },
+        validateOnBlur: true,
+        validateOnChange: true
     });
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         const errors = await validateForm();
-        if (errors) {
+        if (Object.keys(errors).length > 0) {
             Object.keys(errors).forEach((field) => {
                 if (errors[field]) {
                     toast.error(errors[field]);
@@ -109,19 +115,21 @@ const Register = () => {
     };
 
     const handleSignInWithGoogle = async(response) => {
+        setGoogleLoading(true)
         try {
             const payload = response.credential
             const server_res = await axios.post(google_auth_url, {"access_token": payload })
             console.log(server_res)
             const user = {
                 email: server_res.data.email,
+                username: server_res.data.full_name
             }
             const token = {
                 access: server_res.data.access,
                 refresh: server_res.data.refresh
             }
-            if (server_res.status === 200) {
-                setGoogleLoading(true)
+            console.log(server_res)
+            if (server_res.status === 200) {                
                 setUser(user);
                 setToken(token);
                 localStorage.setItem("tokens", JSON.stringify(token));
@@ -133,7 +141,6 @@ const Register = () => {
             console.log(error)
             setGoogleLoading(false)
         }
-
     }
 
     useEffect(() => {
@@ -157,7 +164,7 @@ const Register = () => {
                 </div>
             }
             <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
-                <div className="bg-red-500 overflow-hidden w-[90%] md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
+                <div className="w-full sm:max-w-[400px] md:p-6 p-3 bg-transparent">
                     <div className="flex items-center justify-between">
                         <div className="text-2xl font-bold tracking-tight text-white">ETHICAL-H</div>
                         <ThemeSwitch />
@@ -175,7 +182,7 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.username}
-                                        className={` ${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
+                                        className={`${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
                                         placeholder="Enter Your Username"
                                     />
                                     {(touched.username && errors.username) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.username && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -206,7 +213,6 @@ const Register = () => {
                                 <div className="relative">
                                     <PasswordInput
                                         name="password"
-                                        type="password"
                                         id="password"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -224,7 +230,6 @@ const Register = () => {
                                 <div className="relative">
                                     <PasswordInput
                                         name="confirmpassword"
-                                        type="password"
                                         id="confirmpassword"
                                         onChange={handleChange}
                                         onBlur={handleBlur}

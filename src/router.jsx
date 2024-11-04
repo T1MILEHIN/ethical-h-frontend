@@ -4,9 +4,14 @@ import { createBrowserRouter } from "react-router-dom";
 import Landing from "./pages/home/components/landing";
 
 const Home = React.lazy(() => import("./pages/home/home"));
+const AllPackages = React.lazy(() => import("./pages/home/allPackages"));
+const Payment = React.lazy(() => import("./pages/home/payment"));
+const Setting = React.lazy(() => import("./pages/home/settings"));
 const Register = React.lazy(() => import("./pages/auth/register"));
 const Login = React.lazy(() => import("./pages/auth/login"));
 import Error from "./components/comingSoon"
+
+import PackageDisplay from "./pages/packageDisplay/packageDisplay";
 
 const router = createBrowserRouter([
     {
@@ -23,17 +28,30 @@ const router = createBrowserRouter([
             },
             {
                 path: "/packages",
-                element: <h1>PACKAGES</h1>
+                element:  (
+                <Suspense fallback={<Loader />}>
+                    <AllPackages />
+                </Suspense>)
             },
             {
                 path: "/payments",
-                element: <h1>PAYMENTS</h1>
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Payment />
+                    </Suspense>)
             },
             {
                 path: "/settings",
-                element: <h1>SETTINGS</h1>
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Setting />
+                    </Suspense>)
             }
         ]
+    },
+    {
+        path: ":packageName",
+        element: <PackageDisplay />
     },
     {
         path: "/register",

@@ -1,30 +1,28 @@
 import { useContext } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext'
 import { Layout } from '../../components/custom/layout'
-import { Button } from '../../components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '../../components/ui/card'
 import { Search } from '../../components/search';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
+import { Tabs, TabsContent } from '../../components/ui/tabs';
 import ThemeSwitch from '../../components/theme-switch';
 import { TopNav } from '../../components/dashboardNav';
 import { UserNav } from '../../components/userNav';
 
 const Home = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+  const { pathname } = useLocation()
 
   if (!user) return <Navigate to="/login" />
 
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
-
       <Layout.Header>
         <TopNav links={topNav} />
         <div className='ml-auto flex items-center space-x-4'>
@@ -37,7 +35,12 @@ const Home = () => {
       {/* ===== Main ===== */}
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>
+            {pathname === "/" && "Dashboard"}
+            {pathname === "/packages" && "Packages"}
+            {pathname === "/payments" && "Payments"}
+            {pathname === "/settings" && "Settings"}
+          </h1>
         </div>
         <Tabs
           orientation='vertical'
@@ -65,7 +68,7 @@ const Home = () => {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
+                  <div className='text-2xl font-bold'>N{user?.wallet}</div>
                 </CardContent>
               </Card>
               <Card>
@@ -133,22 +136,18 @@ const topNav = [
   {
     title: 'Overview',
     href: '/',
-    isActive: true,
   },
   {
     title: 'packages',
     href: '/packages',
-    isActive: false,
   },
   {
     title: 'Payments',
     href: '/payments',
-    isActive: false,
   },
   {
     title: 'Settings',
     href: '/settings',
-    isActive: false,
   },
 ]
 

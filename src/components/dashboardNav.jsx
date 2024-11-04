@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,14 +22,14 @@ export function TopNav({ className, links, ...props }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side='bottom' align='start'>
-            {links.map(({ title, href, isActive }) => (
+            {links.map(({ title, href }) => (
               <DropdownMenuItem key={`${title}-${href}`} asChild>
-                <Link
+                <NavLink
                   to={href}
-                  className={!isActive ? 'text-muted-foreground' : ''}
+                  className={({isActive})=> !isActive ? 'text-muted-foreground' : ''}
                 >
                   {title}
-                </Link>
+                </NavLink>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -41,16 +41,15 @@ export function TopNav({ className, links, ...props }) {
           'hidden items-center space-x-4 md:flex lg:space-x-6',
           className
         )}
-        {...props}
-      >
-        {links.map(({ title, href, isActive }) => (
-          <Link
+        {...props}>
+        {links.map(({ title, href}) => (
+          <NavLink
             key={`${title}-${href}`}
             to={href}
-            className={`text-sm font-medium transition-colors hover:text-primary ${isActive ? '' : 'text-muted-foreground'}`}
-          >
+            className={({isActive})=> isActive ? 'text-sm font-medium transition-colors hover:text-primary' : 'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'}
+            >
             {title}
-          </Link>
+          </NavLink>
         ))}
       </nav>
     </>

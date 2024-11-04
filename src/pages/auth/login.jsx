@@ -1,5 +1,4 @@
-import { useEffect, useContext } from "react";
-import { FaGoogle } from "react-icons/fa"
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { useFormik } from 'formik';
@@ -19,11 +18,13 @@ import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
 
 const api_login = import.meta.env.VITE_BACKEND_LOGIN;
+const google_auth_url = import.meta.env.VITE_GOOGLE_AUTH;
 const google_auth_id = import.meta.env.VITE_CLIENT_ID;
 
 
 const Login = () => {
     const navigate = useNavigate()
+    const [googleLoading, setGoogleLoading] = useState(false)
     const {user, setUser, setToken} = useContext(AuthContext)
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Enter Your Email Address'),
@@ -33,6 +34,7 @@ const Login = () => {
         mutationFn: async (data) => {
             try {
                 const response = await axios.post(api_login, data);
+                console.log("RESPONSE", response)
                 if (response.status === 200) {
                     console.log(response)
                     const decoded = jwtDecode(response?.data.access);
@@ -44,6 +46,7 @@ const Login = () => {
                     toast.success("Welcome to ETHICAL-H")
                 }
             } catch (error) {
+                console.log(error)
                 toast.error(error?.response?.data?.detail)
             }
         }
@@ -55,8 +58,11 @@ const Login = () => {
             password: ""
         },
         validationSchema,
-        onSubmit: value => {
-            loginMutation.mutate(value)
+        onSubmit: async(value) => {
+            const formData = new FormData();
+            formData.append("email", value.email)
+            formData.append("password", value.password)
+            loginMutation.mutate(formData)
         }
     })
 
@@ -75,12 +81,35 @@ const Login = () => {
         }
     };
 
-    const handleSignInWithGoogle = ()=> {
-        console.log("working")
+    const handleSignInWithGoogle = async(response)=> {
+        setGoogleLoading(true)
+        try {
+            const payload = response.credential
+            const server_res = await axios.post(google_auth_url, {"access_token": payload })
+            console.log(server_res)
+            const user = {
+                email: server_res.data.email,
+                username: server_res.data.full_name
+            }
+            const token = {
+                access: server_res.data.access,
+                refresh: server_res.data.refresh
+            }
+            if (server_res.status === 200) {
+                setUser(user);
+                setToken(token);
+                localStorage.setItem("tokens", JSON.stringify(token));
+                localStorage.setItem("user", JSON.stringify(user));
+                navigate("/")
+                toast.success("Welcome to ETHICAL-H")
+            }
+        } catch (error) {
+            console.log(error)
+            setGoogleLoading(false)
+        }
     }
 
     useEffect(()=> {
-
         google.accounts.id.initialize({
             client_id: google_auth_id,
             callback: handleSignInWithGoogle
@@ -89,15 +118,13 @@ const Login = () => {
             document.getElementById('loginDiv'),
             {theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle'}
         )
-
     }, [])
-    
     
     if (user) return <Navigate to="/" />
 
     return (
         <>
-            {(loginMutation.isPending) &&
+            {(loginMutation.isPending || googleLoading) &&
                 <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
                     <Loader />
                 </div>
@@ -108,7 +135,7 @@ const Login = () => {
                     className: 'my-toast',
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
-                <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-md`}>
+                <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent`}>
                     <div className="flex items-center md:justify-between">
                         <div className='font-bold text-xl text-white'>
                             ETHICAL-H
@@ -132,7 +159,6 @@ const Login = () => {
                                 <p className="text-white">Password</p>
                                 <div className="relative">
                                     <PasswordInput name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
-                                    {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
