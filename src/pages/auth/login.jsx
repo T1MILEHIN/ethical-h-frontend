@@ -22,6 +22,7 @@ const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 const google_auth_url = import.meta.env.VITE_GOOGLE_AUTH_URL;
 
 const google_auth_id = import.meta.env.VITE_CLIENT_ID;
+alert(import.meta.env.VITE_CLIENT_ID);
 
 
 const Login = () => {
@@ -36,9 +37,7 @@ const Login = () => {
         mutationFn: async (data) => {
             try {
                 const response = await axios.post(api_login, data);
-                console.log("RESPONSE", response)
                 if (response.status === 200) {
-                    console.log(response)
                     const decoded = jwtDecode(response?.data.access);
                     setUser(decoded);
                     setToken(response?.data);
