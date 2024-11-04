@@ -25,6 +25,7 @@
     "firebase": "^11.0.1",
     "formik": "^2.4.6",
     "framer-motion": "^11.3.2",
+    "helmet": "^8.0.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.408.0",
     "prop-types": "^15.8.1",

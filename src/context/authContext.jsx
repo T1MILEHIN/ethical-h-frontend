@@ -44,7 +44,7 @@ const AuthProvider = ({children})=> {
                     access: response?.data?.access,
                 }));
                 setUser(decoded)
-                localStorage.setItem("tokens", JSON.stringify(response?.data))
+                localStorage.setItem("tokens", JSON.stringify(token))
                 localStorage.setItem("user", JSON.stringify(decoded));
             }
             else {

@@ -68,7 +68,7 @@ const Home = () => {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>N{user?.wallet}</div>
+                  <div className='text-2xl font-bold'>N{user?.wallet.toLocaleString()}</div>
                 </CardContent>
               </Card>
               <Card>

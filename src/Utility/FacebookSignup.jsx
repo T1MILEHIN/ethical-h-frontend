@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
-const api_register = import.meta.env.VITE_BACKEND_REGISTER;; // Your signup API endpoint
+const api_register = import.meta.env.VITE_BACKEND_REGISTER;
 
 const FacebookSignup = () => {
   const navigate = useNavigate();
