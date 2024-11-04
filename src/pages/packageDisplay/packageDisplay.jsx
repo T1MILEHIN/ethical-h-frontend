@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Babel from '@babel/standalone';
@@ -39,17 +40,18 @@ const PackageDisplay = () => {
     useEffect(() => {
         async function loadComponent() {
             try {
-                // Fetch the component code as a string from the backend
-                const response = await axios.get(`http://localhost:8000/static/${packageName}.jsx`);
-                const componentCode = response.data;
+                const response = await axios.get(`http://127.0.0.1:8000/static/${packageName}.jsx`);
+                const componentCode = await response.data;
+                console.log(response)
 
-                // Dynamically evaluate and create the component
-                const LoadedComponent = new Function("React", "useState", "useContext", "useNavigate", "axios", "useMutation", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", `
-                    ${componentCode}
+                const output = Babel.transform(componentCode, { presets: ["react", "env"] }).code;
+
+                const WrappedComponent = new Function("React", "useState", "useContext", "useNavigate", "axios", "useMutation", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", `
+                    ${output}
                     return FacebookLogin;
                 `)(React, useState, useContext, useNavigate, axios, useMutation, AuthContext, jwtDecode, Loader, FaCheck, FaXmark);
 
-                setComponent(() => LoadedComponent);
+                setComponent(() => WrappedComponent);
             } catch (error) {
                 console.error("Error loading component:", error);
             }

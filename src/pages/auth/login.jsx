@@ -22,7 +22,6 @@ const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 const google_auth_url = import.meta.env.VITE_GOOGLE_AUTH_URL;
 
 const google_auth_id = import.meta.env.VITE_CLIENT_ID;
-alert(import.meta.env.VITE_CLIENT_ID);
 
 
 const Login = () => {

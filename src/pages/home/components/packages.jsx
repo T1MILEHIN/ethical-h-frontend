@@ -12,10 +12,12 @@ export function Packages() {
     <>
       <Card className='mb-2'>
         <CardHeader>
-          <CardDescription><h2>All your paid packages will be displayed here</h2></CardDescription>
+          <CardDescription>
+            All your paid packages will be displayed here
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>You have not Paid for any Package</p>
+          You have not Paid for any Package
         </CardContent>
       </Card>
       <Link to='/packages'>
