@@ -84,7 +84,7 @@ const FacebookLogin = () => {
         </div>
       }
 
-      <div className="mt-4 ">
+      <div className="mt-4">
         <img src={'/Images/Facebook-Logo-2019.png'} alt="Facebook Logo" className="mx-auto w-[250px] h-[90px]" />
       </div>
 

@@ -31,14 +31,11 @@ const AuthProvider = ({children})=> {
         localStorage.removeItem("tokens")
         toast.success("Logged Out Successfully")
     }
-    console.log(token)
-
     let updateToken = async()=> {
         try {
             const response = await axios.post("http://127.0.0.1:8000/api/refresh/", {refresh: token?.refresh})
             if (response?.status === 200 || response?.status === 201) {
                 const decoded = jwtDecode(response?.data?.access);
-                console.log(response?.data)
                 setToken((prev) => ({
                     ...prev,
                     access: response?.data?.access,

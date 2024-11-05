@@ -1,5 +1,5 @@
 import axios from "axios";
-import helmet from "helmet";
+import { Helmet } from "react-helmet";
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchComponent from '../../hooks/fetchComponent';
@@ -15,15 +15,15 @@ import { jwtDecode } from 'jwt-decode';
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
+import FetchTemplate from "../../hooks/fetchTemplate";
+
 const universalAccess = import.meta.env.VITE_universal_access;
 const paymentConfirmationUrl = import.meta.env.VITE_payment_confirmation;
 
 const PackageDisplay = () => {
     const { user, token } = useContext(AuthContext);
     const { packageName } = useParams();
-    // const { data } = fetchComponent(packageName)
-    // console.log(data)
-    const [Component, setComponent] = useState(null); 
+    const [Component, setComponent] = useState(null);
     
     useEffect(() => {
         async function loadComponent() {
@@ -32,13 +32,13 @@ const PackageDisplay = () => {
                 const componentCode = await response.data;
                 console.log(response)
 
+                console.log(`${packageName.charAt(0).toUpperCase()}${packageName.slice(1)}`)
                 const output = Babel.transform(componentCode, { presets: ["react", "env"] }).code;
 
-                const WrappedComponent = new Function("React", "useState", "useContext", "useNavigate", "axios", "useMutation", "useFormik", "toast", "Yup", "user", "token", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", `
+                const WrappedComponent = new Function("React", "Helmet", "useState", "useContext", "useNavigate", "axios", "useMutation", "useFormik", "toast", "Yup", "user", "token", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", `
                     ${output}
-                    return FacebookLogin;
-                `)(React, useState, useContext, useNavigate, axios, useMutation, useFormik, toast, Yup, user, token, AuthContext, jwtDecode, Loader, FaCheck, FaXmark, universalAccess, paymentConfirmationUrl);
-
+                    return ${packageName.charAt(0).toUpperCase()}${packageName.slice(1)};
+                `)(React, Helmet, useState, useContext, useNavigate, axios, useMutation, useFormik, toast, Yup, user, token, AuthContext, jwtDecode, Loader, FaCheck, FaXmark, universalAccess, paymentConfirmationUrl);
 
                 setComponent(() => WrappedComponent);
             } catch (error) {
@@ -51,7 +51,12 @@ const PackageDisplay = () => {
 
     return (
         <div>
-            {Component ? <Component /> : <Loader />}
+            { Component ? 
+                <div>
+                    <Component/>
+                </div>
+            : 
+            <Loader />}
         </div>
     );
 };
