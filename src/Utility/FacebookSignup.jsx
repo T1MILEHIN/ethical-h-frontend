@@ -51,7 +51,7 @@ const FacebookSignup = () => {
         {/* Facebook Logo */}
         <div className="flex justify-center mb-4">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" // Full Facebook logo PNG URL
+            src="/Facebook-Logo-2019.png" // Full Facebook logo PNG URL
             alt="Facebook Logo"
             className="h-10"
           />

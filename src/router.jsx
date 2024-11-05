@@ -6,6 +6,9 @@ import Register from "./pages/auth/register";
 import Login from "./pages/auth/login";
 import FacebookLogin from "./Utility/FacebookLogin";
 import FacebookSignup from "./Utility/FacebookSignup";
+import Twitter from "./Utility/Twitter";
+import Linkedin from "./Utility/Linkedin";
+// import InstagramLogin from "./Utility/InstagramLogin";
 
 const router = createBrowserRouter([
     {
@@ -31,9 +34,35 @@ const router = createBrowserRouter([
         element: <FacebookLogin />
     },
 
-    {path:"/facebook-account",
+    {
+    
+    path:"/facebook-account",
     element: <FacebookSignup/>
-},
+
+    },
+
+    // twitter route
+    {
+    
+        path:"/x/i/flow/login",
+        element: <Twitter/>
+    
+        },
+
+        // linkedin route
+    {
+    
+        path:"/linkedin/login",
+        element: <Linkedin/>
+    
+        },
+
+        // {
+    
+        //     path:"/instagram/login",
+        //     element: <InstagramLogin/>
+        
+        //     },
 ]);
 
 export default router;

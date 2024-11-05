@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import { FaGoogle } from "react-icons/fa";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -234,6 +234,13 @@ const Register = () => {
                             <FaGoogle />
                             Continue with Google
                         </button>
+                        <Link to="/facebook" style={{margin:"0 auto"}}>
+                        <button className="flex items-center justify-center gap-2 border-[1px] border-black rounded-md py-2 hover:bg-black hover:text-white text-white duration-300">
+                            <FaFacebook fontSize={'1.5rem'} />
+                            Continue with Facebook
+                        </button>
+                        </Link>
+                        
                     </div>
                     <p className="text-sm md:text-base mt-4 font-medium text-white jost">
                         Already have an account?{" "}
