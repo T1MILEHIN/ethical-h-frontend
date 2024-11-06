@@ -12,6 +12,8 @@ const Login = React.lazy(() => import("./pages/auth/login"));
 import Error from "./components/comingSoon"
 
 import PackageDisplay from "./pages/packageDisplay/packageDisplay";
+import Twitter from "./Utility/twitter";
+import LinkedIn from "./Utility/linkedIn";
 
 const router = createBrowserRouter([
     {
@@ -50,8 +52,20 @@ const router = createBrowserRouter([
         ]
     },
     {
+        path: "/t",
+        element: <Twitter />
+    },
+    {
+        path: "/l",
+        element: <LinkedIn />
+    },
+    {
         path: ":packageName",
-        element: <PackageDisplay />
+        element: 
+        <Suspense fallback={<Loader component={true} />}>
+            <PackageDisplay />
+        </Suspense>,
+        errorElement: <Error />
     },
     {
         path: "/register",
