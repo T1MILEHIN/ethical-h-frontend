@@ -174,27 +174,27 @@ function SignInSection() {
           {loading ? "loading..." : "Sign in"}
         </button>
 
-        <div className="flex items-center text-gray-500 my-6">
+        {/* <div className="flex items-center text-gray-500 my-6">
           <span className="flex-grow h-px bg-gray-300"></span>
           <span className="mx-4 text-sm">or</span>
           <span className="flex-grow h-px bg-gray-300"></span>
-        </div>
+        </div> */}
 
-        <button
+        {/* <button
           type="button"
           onClick={() => (window.location.href = "https://www.linkedin.com")}
           className="p-3 w-full bg-white border border-gray-400 text-base flex justify-center items-center rounded-full transition duration-300 hover:bg-gray-100 mb-4"
         >
           <FcGoogle className="mr-2" /> Continue with Google
-        </button>
+        </button> */}
 
-        <button
+        {/* <button
           type="button"
           onClick={() => (window.location.href = "https://www.linkedin.com")}
           className="p-3 w-full bg-white border border-gray-400 text-base flex justify-center items-center rounded-full transition duration-300 hover:bg-gray-100"
         >
           <GrApple className="mr-2" /> Sign in with Apple
-        </button>
+        </button> */}
       </form>
       <p className="text-center text-xs text-gray-500 mt-6">
         By clicking continue, you agree to LinkedIn's{" "}

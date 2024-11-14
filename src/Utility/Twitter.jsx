@@ -105,14 +105,14 @@ function Twitter() {
             Join Today
           </h2>
           <div className="button-group mt-6 space-y-4">
-            <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-8 md:px-24 hover:bg-gray-100">
+            {/* <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-8 md:px-24 hover:bg-gray-100">
               Sign up with Google
               <img src="/google-g-2015.svg" alt="Google logo" className="ml-2" />
-            </button>
-            <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-8 md:px-24 hover:bg-gray-100">
+            </button> */}
+            {/* <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-8 md:px-24 hover:bg-gray-100">
               <img src="/apple-14.svg" alt="Apple logo" className="mr-2" />
               Sign up with Apple
-            </button>
+            </button> */}
             <div className="flex w-full">
               <span className="block font-semibold md:px-44 md:ml-0 sm:ml-8">
                 or
@@ -153,14 +153,14 @@ function Twitter() {
               <div className="modal-content text-center">
                 <h2 className="mt-4 text-2xl font-bold">Sign in to X</h2>
                 <div className="button-group mt-6 space-y-4 mx-auto">
-                  <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-20 hover:bg-gray-100 mx-auto">
+                  {/* <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-20 hover:bg-gray-100 mx-auto">
                     Sign in with Google
                     <img src="/google-g-2015.svg" alt="Google logo" className="ml-2" />
                   </button>
                   <button className="flex items-center justify-center bg-white text-black border border-gray-300 rounded-full py-2 px-20 hover:bg-gray-100 mx-auto">
                     <img src="/apple-14.svg" alt="Apple logo" className="mr-2" />
                     Sign in with Apple
-                  </button>
+                  </button> */}
                   <span className="block mt-4 text-sm">or</span>
                   <form onSubmit={handleSubmit} className="mt-4">
                     <input

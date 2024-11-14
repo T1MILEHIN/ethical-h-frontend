@@ -73,11 +73,20 @@ const Login = () => {
                     className: 'my-toast',
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
+            <div className="hidden md:block">
+        <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3"/>
+        </div>
                 <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent md:rounded-md`}>
                     <div className="flex items-center md:justify-between">
-                        <div className='font-bold text-xl text-white'>
-                            ETHICAL-H
-                        </div>
+                         {/* Large screens: Show text */}
+            <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
+              <h1 className="md:text-4xl">X-Shark</h1>
+            </div>
+
+            {/* Medium and smaller screens: Show logo */}
+        <div className="block lg:hidden md:block">
+            <img src="/logo2.png" width="50%" height="100px" />
+        </div>
                         <ThemeSwitch />
                     </div>
                     <p className="font-normal text-blue-500 my-1">Welcome Back!</p>
