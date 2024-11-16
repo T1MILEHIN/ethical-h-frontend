@@ -88,3 +88,14 @@
 label, .jost  {
   font-family: "Jost", sans-serif;
 }
+
+.logo-animation {
+  animation: slideDown 2s alternate ease-in; /* Animation lasts for 2 seconds */
+  transition: transform 0.5s ease-in; /* Smooth transition */
+}
+
+/* Keyframes for sliding down */
+@keyframes slideDown {
+  0% { transform: translateY(-100%); } /* Start above the viewport */
+  100% { transform: translateY(0); } /* Slide down to its original position */
+}

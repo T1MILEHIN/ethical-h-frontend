@@ -131,7 +131,7 @@ const Register = () => {
         </div>
       )}
       <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
-        <div className="hidden md:block">
+        <div className="hidden md:block logo-animation">
         <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3"/>
         </div>
         <div className="bg-red-500 overflow-hidden w-full md:w-[500px] md:py-4 md:px-4 p-4 bg-transparent rounded-tl-[60px] rounded-tr-[60px] md:rounded-md">
@@ -142,7 +142,7 @@ const Register = () => {
             </div>
 
             {/* Medium and smaller screens: Show logo */}
-        <div className="block lg:hidden md:block">
+        <div className="block lg:hidden md:block logo-animation">
             <img src="/logo2.png" width="50%" height="100px" />
         </div>
             <ThemeSwitch />
