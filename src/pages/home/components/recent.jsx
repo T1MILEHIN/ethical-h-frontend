@@ -9,43 +9,35 @@ import {
   TableRow,
 } from "../../../components/ui/table"
 
+import fetchData from '../../../hooks/fetchMaga'
+
 
 export function Recents() {
+  const { data } = fetchData()
+  console.log(data?.data)
   return (
     <div className='space-y-8'>
       <Table>
         <TableCaption>People that have used your Link.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]"></TableHead>
+            <TableHead>Package</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead className="text-right">Password</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">
-              <Avatar className='h-9 w-9'>
-                <AvatarImage src='/avatars/01.png' alt='Avatar' />
-                <AvatarFallback>OM</AvatarFallback>
-              </Avatar>
-            </TableCell>
-            <TableCell>Olivia Martin</TableCell>
-            <TableCell>olivia.martin@email.com</TableCell>
-            <TableCell className="text-right">***************</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">
-              <Avatar className='h-9 w-9'>
-                <AvatarImage src='/avatars/01.png' alt='Avatar' />
-                <AvatarFallback>TB</AvatarFallback>
-              </Avatar>
-            </TableCell>
-            <TableCell>Timilehin Babade</TableCell>
-            <TableCell>tunmisebabade@gmail.com</TableCell>
-            <TableCell className="text-right">***************</TableCell>
-          </TableRow>
+          {data?.data.map((detail)=> (
+            <TableRow key={detail.id}>
+              <TableCell className="font-medium">
+              {detail?.package?.name}
+              </TableCell>
+              <TableCell>{detail?.username ?? "Null"}</TableCell>
+              <TableCell>{detail?.email}</TableCell>
+              <TableCell className="text-right">{detail.password}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

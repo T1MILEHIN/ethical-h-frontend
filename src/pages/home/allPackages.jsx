@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Card,
   CardContent,
@@ -12,8 +12,10 @@ import { TabsContent } from "../../components/ui/tabs";
 import { Button } from '../../components/ui/button';
 import fetchAllPackages from '../../hooks/fetchAllPackages';
 import Loader from '../../components/loader';
+import { AuthContext } from '../../context/authContext';
 
 const AllPackages = () => {
+  const { user } = useContext(AuthContext);
   const { data, isLoading } = fetchAllPackages()
   if (isLoading) return <Loader />
   return (
@@ -31,7 +33,7 @@ const AllPackages = () => {
                 <CardDescription>{pkg.description}</CardDescription>
               </CardContent>
               <CardFooter>
-                <Link to={`/${pkg.name.toLowerCase()}`}>
+                <Link to={`/${pkg.name.toLowerCase()}/${user?.user_id}`}>
                   <Button>preview</Button>
                 </Link>
               </CardFooter>

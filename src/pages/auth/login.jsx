@@ -146,8 +146,8 @@ const Login = () => {
                     <p className="text-sm text-white font-normal jost">Enter Your details to continue</p>
                     <form onSubmit={handleFormSubmit}>
                         <div className="my-2">
-                            <label className="font-" htmlFor="email">
-                                <p className="text-white">Email</p>
+                            <label className="" htmlFor="email">
+                                <p className="text-white text-sm">Email</p>
                                 <div className="relative">
                                     <Input name="email" id="email" value={values.email} onChange={handleChange} type="text" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -155,21 +155,19 @@ const Login = () => {
                             </label>
                         </div>
                         <div className="my-2">
-                            <label className="font-" htmlFor="password">
-                                <p className="text-white">Password</p>
+                            <label className="" htmlFor="password">
+                                <p className="text-white text-sm">Password</p>
                                 <div className="relative">
                                     <PasswordInput name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
                                 </div>
                             </label>
                         </div>
-                        <p className="text-right my-1 font-medium text-white"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
+                        <p className="text-right my-2 font-light text-white text-xs"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
                         <Button type="submit" className="w-full">{"Login"}</Button>
                         <p className='text-center font-extralight py-1'>or</p>
                     </form>
-                    <div id="loginDiv" className='login-options flex flex-col gap-3 font-medium'>
-                        {/* <button className='flex items-center justify-center gap-2 border-[1px] border-black rounded-3xl py-2 bg-black text-white hover:bg-black hover:text-white duration-300'><FaGoogle />Continue with Google</button> */}
-                    </div>
-                    <p className="text-sm md:text-base mt-4 font-medium text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
+                    <div id="loginDiv" className='login-options flex flex-col gap-3 font-medium'></div>
+                    <p className="text-xs mt-4 font-light text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
                 </div>
             </motion.section>
         </>

@@ -60,7 +60,7 @@ const router = createBrowserRouter([
         element: <LinkedIn />
     },
     {
-        path: ":packageName",
+        path: "/:packageName/:user_id",
         element: 
         <Suspense fallback={<Loader component={true} />}>
             <PackageDisplay />

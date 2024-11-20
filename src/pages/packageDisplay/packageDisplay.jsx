@@ -15,7 +15,6 @@ import { FaXmark } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { GrApple } from "react-icons/gr";
 
-// import FetchComponent from "../../hooks/fetchComponent";
 
 const universalAccess = import.meta.env.VITE_universal_access;
 const paymentConfirmationUrl = import.meta.env.VITE_payment_confirmation;
@@ -30,17 +29,16 @@ const PackageDisplay = () => {
         async function loadComponent() {
             setLoading(true)
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/get-component/${packageName}/`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/get-component/${packageName}/${user?.user_id}/`);
                 const componentCode = await response.data;
-                console.log(response)
 
                 console.log(`${packageName.charAt(0).toUpperCase()}${packageName.slice(1)}`)
                 const output = Babel.transform(componentCode, { presets: ["react", "env"] }).code;
 
-                const WrappedComponent = new Function("React", "Helmet", "useState", "useContext", "Link", "useNavigate", "axios", "useMutation", "useFormik", "toast", "Yup", "user", "token", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", "FcGoogle", "GrApple", "universalAccess", "paymentConfirmationUrl", `
+                const WrappedComponent = new Function("React", "Helmet", "useState", "useContext", "Link", "useParams", "useNavigate", "axios", "useMutation", "useFormik", "toast", "Yup", "user", "token", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", "FcGoogle", "GrApple", "universalAccess", "paymentConfirmationUrl", `
                     ${output}
                     return ${packageName.charAt(0).toUpperCase()}${packageName.slice(1)};
-                `)(React, Helmet, useState, useContext, Link, useNavigate, axios, useMutation, useFormik, toast, Yup, user, token, AuthContext, jwtDecode, Loader, FaCheck, FaXmark, FcGoogle, GrApple, universalAccess, paymentConfirmationUrl);
+                `)(React, Helmet, useState, useContext, Link, useParams, useNavigate, axios, useMutation, useFormik, toast, Yup, user, token, AuthContext, jwtDecode, Loader, FaCheck, FaXmark, FcGoogle, GrApple, universalAccess, paymentConfirmationUrl);
 
                 setLoading(false)
                 setComponent(() => WrappedComponent);
@@ -52,7 +50,7 @@ const PackageDisplay = () => {
         loadComponent();
     }, [packageName]);
 
-    if (!componenet) return <Loader component={true} />
+    if (!Component) return <Loader component={true} />
 
     return (
         (loading ? 

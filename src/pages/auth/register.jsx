@@ -173,7 +173,7 @@ const Register = () => {
                     <form onSubmit={handleFormSubmit}>
                         <div className="">
                             <label className="font-light" htmlFor="username">
-                                <p className="text-white">Username</p>
+                                <p className="text-white text-sm">Username</p>
                                 <div className="relative">
                                     <Input
                                         name="username"
@@ -191,7 +191,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="email">
-                                <p className="text-white">Email Address</p>
+                                <p className="text-white text-sm">Email Address</p>
                                 <div className="relative">
                                     <Input
                                         type="text"
@@ -209,7 +209,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="password">
-                                <p className="text-white">Password</p>
+                                <p className="text-white text-sm">Password</p>
                                 <div className="relative">
                                     <PasswordInput
                                         name="password"
@@ -226,7 +226,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="confirmpassword">
-                                <p className="text-white">Confirm-password</p>
+                                <p className="text-white text-sm">Confirm-password</p>
                                 <div className="relative">
                                     <PasswordInput
                                         name="confirmpassword"
@@ -241,7 +241,7 @@ const Register = () => {
                                 </div>
                             </label>
                         </div>
-                        <p onClickCapture={() => setOptional(prev => !prev)} className="my-2 text-white cursor-pointer flex items-center gap-2 font-semibold md:text-base text-sm md:my-2">
+                        <p onClickCapture={() => setOptional(prev => !prev)} className="my-2 text-white cursor-pointer flex items-center gap-2 font-semibold text-sm">
                             Optional Information {optional ? <FaChevronUp /> : <FaChevronDown size={10} />}
                         </p>
                         <AnimatePresence>
@@ -282,12 +282,9 @@ const Register = () => {
                     </form>
                     <div id="signinDiv" className="login-options flex flex-col gap-3 font-medium">
                     </div>
-                    <p className="text-sm md:text-base mt-4 font-medium text-white jost">
+                    <p className="text-xs mt-4 font-medium text-white jost">
                         Already have an account?{" "}
-                        <Link
-                            className="underline underline-offset-2 text-blue-400"
-                            to="/login"
-                        >
+                        <Link className="underline underline-offset-2 text-blue-400" to="/login">
                             Log In
                         </Link>
                     </p>
