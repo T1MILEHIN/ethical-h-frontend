@@ -88,7 +88,7 @@ const Register = () => {
             confirmpassword: ''
         },
         validationSchema,
-        onSubmit: async(value) => {
+        onSubmit: async (value) => {
             const formData = new FormData();
             formData.append("email", value.email)
             formData.append("username", value.username)
@@ -116,11 +116,11 @@ const Register = () => {
         }
     };
 
-    const handleSignInWithGoogle = async(response) => {
+    const handleSignInWithGoogle = async (response) => {
         setGoogleLoading(true)
         try {
             const payload = response.credential
-            const server_res = await axios.post(google_auth_url, {"access_token": payload })
+            const server_res = await axios.post(google_auth_url, { "access_token": payload })
             console.log(server_res)
             const user = {
                 user_id: server_res.data.id,
@@ -133,7 +133,7 @@ const Register = () => {
                 refresh: server_res.data.refresh
             }
             console.log(server_res)
-            if (server_res.status === 200) {                
+            if (server_res.status === 200) {
                 setUser(user);
                 setToken(token);
                 localStorage.setItem("tokens", JSON.stringify(token));
@@ -170,7 +170,12 @@ const Register = () => {
             <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
                 <div className="w-full sm:max-w-[400px] md:p-6 p-3 bg-transparent">
                     <div className="flex items-center justify-between">
-                        <div className="text-2xl font-bold tracking-tight text-white">ETHICAL-H</div>
+                        <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
+                            <h1 className="md:text-4xl">X-Shark</h1>
+                        </div>
+                        <div className="block lg:hidden md:block logo-animation">
+                            <img src="/logo2.png" width="50%" height="100px" />
+                        </div>
                         <ThemeSwitch />
                     </div>
                     <p className="text-sm font-normal text-white my-1 jost">Please fill in your details to get started</p>

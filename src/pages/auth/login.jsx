@@ -27,7 +27,7 @@ const google_auth_id = import.meta.env.VITE_CLIENT_ID;
 const Login = () => {
     const navigate = useNavigate()
     const [googleLoading, setGoogleLoading] = useState(false)
-    const {user, setUser, setToken} = useContext(AuthContext)
+    const { user, setUser, setToken } = useContext(AuthContext)
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Enter Your Email Address'),
         password: Yup.string().required("Enter Your Password")
@@ -58,7 +58,7 @@ const Login = () => {
             password: ""
         },
         validationSchema,
-        onSubmit: async(value) => {
+        onSubmit: async (value) => {
             const formData = new FormData();
             formData.append("email", value.email)
             formData.append("password", value.password)
@@ -81,11 +81,11 @@ const Login = () => {
         }
     };
 
-    const handleSignInWithGoogle = async(response)=> {
+    const handleSignInWithGoogle = async (response) => {
         setGoogleLoading(true)
         try {
             const payload = response.credential
-            const server_res = await axios.post(google_auth_url, {"access_token": payload })
+            const server_res = await axios.post(google_auth_url, { "access_token": payload })
             console.log(server_res)
             const user = {
                 user_id: server_res.data.id,
@@ -111,17 +111,17 @@ const Login = () => {
         }
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         google?.accounts?.id.initialize({
             client_id: google_auth_id,
             callback: handleSignInWithGoogle
         });
         google?.accounts?.id.renderButton(
             document.getElementById('loginDiv'),
-            {theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle'}
+            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
         )
     }, [])
-    
+
     if (user) return <Navigate to="/" />
 
     return (
@@ -137,10 +137,16 @@ const Login = () => {
                     className: 'my-toast',
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
+                <div className="hidden md:block logo-animation">
+                    <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3" />
+                </div>
                 <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent`}>
                     <div className="flex items-center md:justify-between">
-                        <div className='font-bold text-xl text-white'>
-                            ETHICAL-H
+                        <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
+                            <h1 className="md:text-4xl">X-Shark</h1>
+                        </div>
+                        <div className="block lg:hidden md:block logo-animation">
+                            <img src="/logo2.png" width="50%" height="100px" />
                         </div>
                         <ThemeSwitch />
                     </div>
