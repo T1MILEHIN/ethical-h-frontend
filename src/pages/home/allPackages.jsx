@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import React, { useContext } from 'react'
 import {
   Card,
@@ -13,8 +13,13 @@ import { Button } from '../../components/ui/button';
 import fetchAllPackages from '../../hooks/fetchAllPackages';
 import Loader from '../../components/loader';
 import { AuthContext } from '../../context/authContext';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { toast } from 'sonner';
 
 const AllPackages = () => {
+  const location = useLocation()
+  console.log(location)
+  console.log(window.location.hostname)
   const { user } = useContext(AuthContext);
   const { data, isLoading } = fetchAllPackages()
   if (isLoading) return <Loader />
@@ -26,7 +31,7 @@ const AllPackages = () => {
             <Card key={pkg.id}>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <div>
-                  <img src={pkg.image} className='w-full' alt="" />
+                  <img src={pkg.image} className='w-full rounded-xl' alt="" />
                   <CardTitle>
                     {pkg.name}
                   </CardTitle>
@@ -35,10 +40,13 @@ const AllPackages = () => {
               <CardContent>
                 <CardDescription>{pkg.description}</CardDescription>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex">
                 <Link to={`/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
                   <Button>preview</Button>
                 </Link>
+                <CopyToClipboard onCopy={() => toast.success(`${pkg.name} Link Copied`)} text={`${window.location.hostname}/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
+                  <Button>Copy Link</Button>
+                </CopyToClipboard>
               </CardFooter>
             </Card>
           ))}
