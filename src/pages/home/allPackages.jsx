@@ -25,15 +25,18 @@ const AllPackages = () => {
           {data?.data.map((pkg) => (
             <Card key={pkg.id}>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle>
-                  {pkg.name}
-                </CardTitle>
+                <div>
+                  <img src={pkg.image} className='w-full' alt="" />
+                  <CardTitle>
+                    {pkg.name}
+                  </CardTitle>
+                </div>
               </CardHeader>
               <CardContent>
                 <CardDescription>{pkg.description}</CardDescription>
               </CardContent>
               <CardFooter>
-                <Link to={`/${pkg.name.toLowerCase()}/${user?.user_id}`}>
+                <Link to={`/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
                   <Button>preview</Button>
                 </Link>
               </CardFooter>

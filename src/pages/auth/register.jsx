@@ -67,11 +67,13 @@ const Register = () => {
         mutationFn: async (data) => {
             try {
                 const response = await axios.post(api_register, data)
+                console.log(response)
                 if (response.status === 201) {
                     toast.success("Welcome fellow hacker");
                     navigate("/login");
                 }
             } catch (error) {
+                console.log(error)
                 toast.error(error?.message)
             }
         }
@@ -121,6 +123,8 @@ const Register = () => {
             const server_res = await axios.post(google_auth_url, {"access_token": payload })
             console.log(server_res)
             const user = {
+                user_id: server_res.data.id,
+                wallet: server_res.data.wallet,
                 email: server_res.data.email,
                 username: server_res.data.full_name
             }
@@ -144,11 +148,11 @@ const Register = () => {
     }
 
     useEffect(() => {
-        google.accounts.id.initialize({
+        google?.accounts?.id.initialize({
             client_id: google_auth_id,
             callback: handleSignInWithGoogle
         });
-        google.accounts.id.renderButton(
+        google?.accounts?.id.renderButton(
             document.getElementById('signinDiv'),
             { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
         )
