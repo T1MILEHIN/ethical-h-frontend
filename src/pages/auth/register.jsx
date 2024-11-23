@@ -139,7 +139,7 @@ const Register = () => {
                 localStorage.setItem("tokens", JSON.stringify(token));
                 localStorage.setItem("user", JSON.stringify(user));
                 navigate("/")
-                toast.success("Welcome to ETHICAL-H")
+                toast.success("Welcome to X-Shark")
             }
         } catch (error) {
             console.log(error)

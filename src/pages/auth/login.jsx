@@ -81,7 +81,7 @@ const Login = () => {
         }
     };
 
-    const handleSignInWithGoogle = async (response) => {
+    const handleSignInWithGoogle = async(response) => {
         setGoogleLoading(true)
         try {
             const payload = response.credential
@@ -103,7 +103,7 @@ const Login = () => {
                 localStorage.setItem("tokens", JSON.stringify(token));
                 localStorage.setItem("user", JSON.stringify(user));
                 navigate("/")
-                toast.success("Welcome to ETHICAL-H")
+                toast.success("Welcome to X-Shark")
             }
         } catch (error) {
             console.log(error)
@@ -170,7 +170,7 @@ const Login = () => {
                                 </div>
                             </label>
                         </div>
-                        <p className="text-right my-2 font-light text-white text-xs"><Link to="/auth/forgotPassword">Forgot Password?</Link></p>
+                        <p className="text-right my-2 font-light text-white text-xs"><Link to="/forgotPassword">Forgot Password?</Link></p>
                         <Button type="submit" className="w-full">{"Login"}</Button>
                         <p className='text-center font-extralight py-1'>or</p>
                     </form>

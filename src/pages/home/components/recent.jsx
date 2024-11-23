@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avatar'
 import {
   Table,
   TableBody,
@@ -8,13 +7,12 @@ import {
   TableHeader,
   TableRow,
 } from "../../../components/ui/table"
-
 import fetchData from '../../../hooks/fetchMaga'
 
 
 export function Recents() {
   const { data } = fetchData()
-  
+  console.log(data)
   return (
     <div className='space-y-8'>
       <Table>
@@ -28,7 +26,7 @@ export function Recents() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.data.map((detail)=> (
+          {data?.data?.map((detail)=> (
             <TableRow key={detail.id}>
               <TableCell className="font-medium">
               {detail?.package?.name}
