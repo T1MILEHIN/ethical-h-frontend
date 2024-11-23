@@ -14,7 +14,7 @@ import fetchData from '../../../hooks/fetchMaga'
 
 export function Recents() {
   const { data } = fetchData()
-  console.log(data?.data)
+  
   return (
     <div className='space-y-8'>
       <Table>

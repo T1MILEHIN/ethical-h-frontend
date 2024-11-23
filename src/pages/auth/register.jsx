@@ -168,6 +168,9 @@ const Register = () => {
                 </div>
             }
             <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
+                <div className="hidden md:block logo-animation">
+                    <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3" />
+                </div>
                 <div className="w-full sm:max-w-[400px] md:p-6 p-3 bg-transparent">
                     <div className="flex items-center justify-between">
                         <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
