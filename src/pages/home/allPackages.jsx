@@ -17,7 +17,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'sonner';
 
 const AllPackages = () => {
-  const location = useLocation()
   const { user } = useContext(AuthContext);
   const { data, isLoading } = fetchAllPackages()
   if (isLoading) return <Loader />
