@@ -18,8 +18,6 @@ import { toast } from 'sonner';
 
 const AllPackages = () => {
   const location = useLocation()
-  console.log(location)
-  console.log(window.location.hostname)
   const { user } = useContext(AuthContext);
   const { data, isLoading } = fetchAllPackages()
   if (isLoading) return <Loader />
@@ -30,8 +28,8 @@ const AllPackages = () => {
           {data?.data.map((pkg) => (
             <Card key={pkg.id}>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <div>
-                  <img src={pkg.image} className='w-full rounded-xl' alt="" />
+                <div className='space-y-2'>
+                  <img src={pkg.image} className='w-full rounded-md' alt="" />
                   <CardTitle>
                     {pkg.name}
                   </CardTitle>
@@ -40,11 +38,11 @@ const AllPackages = () => {
               <CardContent>
                 <CardDescription>{pkg.description}</CardDescription>
               </CardContent>
-              <CardFooter className="flex">
+              <CardFooter className="flex gap-2">
                 <Link to={`/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
                   <Button>preview</Button>
                 </Link>
-                <CopyToClipboard onCopy={() => toast.success(`${pkg.name} Link Copied`)} text={`${window.location.hostname}/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
+                <CopyToClipboard onCopy={() => toast.success(`${pkg.name} Link Copied`)} text={`${window.location.origin}/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
                   <Button>Copy Link</Button>
                 </CopyToClipboard>
               </CardFooter>
