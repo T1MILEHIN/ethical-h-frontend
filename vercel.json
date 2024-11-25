@@ -6,7 +6,7 @@
         }
     ],
     "github": {
-        "autoJobCancelation": false,
+        "autoJobCancelation": true,
         "silent": true,
         "autoAlias": true,
         "enabled": true
