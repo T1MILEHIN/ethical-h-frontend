@@ -8,6 +8,7 @@ export const AuthContext = createContext({});
 
 
 const AuthProvider = ({children})=> {
+    const base_url = import.meta.env.VITE_BASE_URL;
     const [user, setUser] = useState(()=> JSON.parse(localStorage.getItem("user")) ?? null);
     const [token, setToken] = useState(()=> JSON.parse(localStorage.getItem("tokens")) ?? null);
     const [isDarkMode, setIsDarkMode] = useState(() =>
@@ -33,14 +34,19 @@ const AuthProvider = ({children})=> {
     }
     let updateToken = async()=> {
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/refresh/", {refresh: token?.refresh})
+            const response = await axios.post(`${base_url}api/refresh/`, {refresh: token?.refresh})
             if (response?.status === 200 || response?.status === 201) {
                 const decoded = jwtDecode(response?.data?.access);
+                console.log("Decoded", decoded)
+                setUser((prev)=> ({
+                    ...prev,
+                    ...decoded
+                }))
                 setToken((prev) => ({
                     ...prev,
                     access: response?.data?.access,
                 }));
-                setUser(decoded)
+                setToken(token);
                 localStorage.setItem("tokens", JSON.stringify(token))
                 localStorage.setItem("user", JSON.stringify(decoded));
             }

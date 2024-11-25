@@ -12,9 +12,9 @@ import fetchData from '../../../hooks/fetchMaga'
 
 export function Recents() {
   const { data } = fetchData()
-  console.log(data)
   return (
     <div className='space-y-8'>
+      {!data?.data.length && <h1 className="text-center my-4">No One has used your Link</h1>}
       <Table>
         <TableCaption>People that have used your Link.</TableCaption>
         <TableHeader>

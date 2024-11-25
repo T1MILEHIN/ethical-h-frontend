@@ -87,7 +87,7 @@ const Login = () => {
             const payload = response.credential
             const server_res = await axios.post(google_auth_url, { "access_token": payload })
             console.log(server_res)
-            const user = {
+            const USER = {
                 user_id: server_res.data.id,
                 wallet: server_res.data.wallet,
                 email: server_res.data.email,
@@ -98,10 +98,10 @@ const Login = () => {
                 refresh: server_res.data.refresh
             }
             if (server_res.status === 200) {
-                setUser(user);
+                setUser(USER);
                 setToken(token);
                 localStorage.setItem("tokens", JSON.stringify(token));
-                localStorage.setItem("user", JSON.stringify(user));
+                localStorage.setItem("user", JSON.stringify(USER));
                 navigate("/")
                 toast.success("Welcome to X-Shark")
             }
@@ -140,7 +140,7 @@ const Login = () => {
                 <div className="hidden md:block logo-animation">
                     <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3" />
                 </div>
-                <div className={`w-full sm:max-w-[400px] md:flex-[2] md:p-6 p-3 bg-transparent`}>
+                <div className={`w-full sm:max-w-[500px] md:flex-[2] md:p-6 p-3 bg-transparent`}>
                     <div className="flex items-center md:justify-between">
                         <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
                             <h1 className="md:text-4xl">X-Shark</h1>
