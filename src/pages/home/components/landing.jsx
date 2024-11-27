@@ -11,7 +11,7 @@ import { Packages } from './packages'
 
 const Landing = () => {
     return (
-        <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
+        <div className='grid grid-cols-1 gap-4 lg:grid-cols-8'>
             <Card className='col-span-1 lg:col-span-4'>
                 <CardHeader>
                     <CardTitle>Paid Packages</CardTitle>
@@ -20,7 +20,7 @@ const Landing = () => {
                     <Packages />
                 </CardContent>
             </Card>
-            <Card className='col-span-1 lg:col-span-3'>
+            <Card className='col-span-1 lg:col-span-4'>
                 <CardHeader>
                     <CardTitle>Recent Link Usage</CardTitle>
                 </CardHeader>
