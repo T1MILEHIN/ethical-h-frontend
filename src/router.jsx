@@ -53,10 +53,6 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/error",
-        element: <Error />
-    },
-    {
         path: "/t",
         element: <Twitter />
     },
