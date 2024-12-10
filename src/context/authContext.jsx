@@ -8,7 +8,6 @@ export const AuthContext = createContext({});
 
 
 const AuthProvider = ({children})=> {
-    const base_url = import.meta.env.VITE_BASE_URL;
     const [user, setUser] = useState(()=> JSON.parse(localStorage.getItem("user")) ?? null);
     const [token, setToken] = useState(()=> JSON.parse(localStorage.getItem("tokens")) ?? null);
     const [isDarkMode, setIsDarkMode] = useState(() =>
