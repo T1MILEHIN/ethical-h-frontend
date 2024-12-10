@@ -148,11 +148,11 @@ const Register = () => {
     }
 
     useEffect(() => {
-        google.accounts.id.initialize({
+        google?.accounts.id.initialize({
             client_id: google_auth_id,
             callback: handleSignInWithGoogle,
         });
-        google.accounts.id.renderButton(
+        google?.accounts.id.renderButton(
             document.getElementById('signinDiv'),
             { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
         );
