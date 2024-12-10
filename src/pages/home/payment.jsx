@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Select,
   SelectContent,
@@ -17,8 +17,10 @@ import {
 } from "@/components/ui/popover";
 import FetchAccountDetails from '../../hooks/fetchAccountDetails';
 import FetchPaymentStatus from '../../hooks/fetchPaymentStatus';
+import { AuthContext } from '../../context/authContext';
 
 const Payment = () => {
+  const { user } = useContext(AuthContext);
   const { data } = FetchAccountDetails()
   const { data: status } = FetchPaymentStatus()
   const [paymentPlan, setPaymentPlan] = useState("");

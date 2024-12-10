@@ -28,7 +28,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className='z-[9999999999999999999999] fixed right-2 bottom-2'>
+      <div className='z-[999999999999] fixed right-2 bottom-2'>
         <PaymentPlanDetails userId={user?.user_id}/>
       </div>
       {/* ===== Top Heading ===== */}
