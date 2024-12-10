@@ -3,6 +3,7 @@ import { Toaster, toast } from 'sonner';
 import axios from "axios"
 import { jwtDecode } from "jwt-decode"
 
+const base_url = import.meta.env.VITE_BASE_URL;
 
 export const AuthContext = createContext({});
 

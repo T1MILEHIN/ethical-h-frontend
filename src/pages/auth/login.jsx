@@ -81,7 +81,7 @@ const Login = () => {
         }
     };
 
-    const handleSignInWithGoogle = async(response) => {
+    const handleSignInWithGoogle = async (response) => {
         setGoogleLoading(true)
         try {
             const payload = response.credential
@@ -112,14 +112,18 @@ const Login = () => {
     }
 
     useEffect(() => {
-        google.accounts.id.initialize({
-            client_id: google_auth_id,
-            callback: handleSignInWithGoogle
-        });
-        google.accounts.id.renderButton(
-            document.getElementById('loginDiv'),
-            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
-        )
+        if (typeof google !== 'undefined' && google.accounts) {
+            google.accounts.id.initialize({
+                client_id: google_auth_id,
+                callback: handleSignInWithGoogle,
+            });
+            google.accounts.id.renderButton(
+                document.getElementById('loginDiv'),
+                { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
+            );
+        } else {
+            console.error("Google API script not available. Check your internet connection.");
+        }
     }, [])
 
     if (user) return <Navigate to="/" />
