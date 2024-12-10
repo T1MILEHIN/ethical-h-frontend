@@ -148,18 +148,14 @@ const Register = () => {
     }
 
     useEffect(() => {
-        if (typeof google !== 'undefined' && google.accounts) {
-            google.accounts.id.initialize({
-                client_id: google_auth_id,
-                callback: handleSignInWithGoogle,
-            });
-            google.accounts.id.renderButton(
-                document.getElementById('signinDiv'),
-                { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
-            );
-        } else {
-            console.error("Google API script not available. Check your internet connection.");
-        }
+        google.accounts.id.initialize({
+            client_id: google_auth_id,
+            callback: handleSignInWithGoogle,
+        });
+        google.accounts.id.renderButton(
+            document.getElementById('signinDiv'),
+            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
+        );
     }, [])
 
     if (user) return <Navigate to="/" />
