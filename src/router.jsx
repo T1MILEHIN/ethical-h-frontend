@@ -53,18 +53,6 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/t",
-        element: <Twitter />
-    },
-    {
-        path: "/l",
-        element: <LinkedIn />
-    },
-    {
-        path: "/i",
-        element: <Instagram />
-    },
-    {
         path: "/:packageName/:user_id",
         element: 
         <Suspense fallback={<Loader component={true} />}>
