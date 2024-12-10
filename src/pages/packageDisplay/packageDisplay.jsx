@@ -28,7 +28,6 @@ const PackageDisplay = () => {
     const [Component, setComponent] = useState(null);
     const [loading, setLoading] = useState(false);
 
-
     useEffect(() => {
         async function loadComponent() {
             setLoading(true)
@@ -48,7 +47,10 @@ const PackageDisplay = () => {
                 setComponent(() => WrappedComponent);
             } catch (error) {
                 setLoading(false)
-                console.error("Error loading component:", error);
+                if (user) {
+                    toast.error(error?.response?.data?.message)
+                    navigate(-1)
+                }    
             }
         }
         loadComponent();
@@ -74,7 +76,7 @@ const PackageDisplay = () => {
                 </Helmet>
             }
 
-            (loading ?
+            {loading ?
                 <Loader component={true} />
                 :
                 <div>
@@ -86,7 +88,7 @@ const PackageDisplay = () => {
                         <Loader component={true} />
                     }
                 </div>
-            )
+            }
         </>
 
     );

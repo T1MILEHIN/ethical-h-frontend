@@ -14,6 +14,7 @@ import Error from "./components/comingSoon"
 import PackageDisplay from "./pages/packageDisplay/packageDisplay";
 import Twitter from "./Utility/twitter";
 import LinkedIn from "./Utility/linkedIn";
+import Instagram from "./Utility/instagram";
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
     {
         path: "/l",
         element: <LinkedIn />
+    },
+    {
+        path: "/i",
+        element: <Instagram />
     },
     {
         path: "/:packageName/:user_id",

@@ -37,18 +37,21 @@ const AuthProvider = ({children})=> {
             const response = await axios.post(`${base_url}api/refresh/`, {refresh: token?.refresh})
             if (response?.status === 200 || response?.status === 201) {
                 const decoded = jwtDecode(response?.data?.access);
-                console.log("Decoded", decoded)
-                setUser((prev)=> ({
+                // console.log("Decoded", decoded)
+                setUser((prev) => ({
                     ...prev,
-                    ...decoded
-                }))
+                    ...decoded,
+                }));
                 setToken((prev) => ({
                     ...prev,
-                    access: response?.data?.access,
+                    access: response.data.access,
                 }));
-                setToken(token);
-                localStorage.setItem("tokens", JSON.stringify(token))
-                localStorage.setItem("user", JSON.stringify(decoded));
+    
+                const updatedToken = { ...token, access: response.data.access };
+                const updatedUser = { ...user, ...decoded };
+
+                localStorage.setItem("tokens", JSON.stringify(updatedToken));
+                localStorage.setItem("user", JSON.stringify(updatedUser));
             }
             else {
                 LOGOUT()
@@ -67,18 +70,15 @@ const AuthProvider = ({children})=> {
         }, threeMinutes)
 
         return() => clearInterval(interval)
-    },[token])
+    }, [token])
 
     return (
         <AuthContext.Provider value={{
             user, setUser, token, setToken, LOGOUT, isDarkMode
         }}>
             <div>
+                <Toaster position="top-center" />
                 {children}
-                <Toaster position="top-center"
-                toastOptions={{
-                    // style: { color: 'white', background: 'black', border: "none" },
-                }} />
             </div>
         </AuthContext.Provider>
     )

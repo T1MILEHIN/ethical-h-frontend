@@ -16,6 +16,7 @@ import { UserNav } from '../../components/userNav';
 
 import fetchData from "../../hooks/fetchMaga"
 import fetchAllPackages from '../../hooks/fetchAllPackages';
+import PaymentPlanDetails from '../../components/paymentPlanDetails'
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -27,6 +28,9 @@ const Home = () => {
 
   return (
     <Layout>
+      <div className='z-[9999999999999999999999] fixed right-2 bottom-2'>
+        <PaymentPlanDetails userId={user?.user_id}/>
+      </div>
       {/* ===== Top Heading ===== */}
       <Layout.Header>
         <TopNav links={topNav} />
@@ -151,10 +155,10 @@ const topNav = [
     title: 'Payments',
     href: '/payments',
   },
-  {
-    title: 'Settings',
-    href: '/settings',
-  },
+  // {
+  //   title: 'Settings',
+  //   href: '/settings',
+  // },
 ]
 
 export default Home;
