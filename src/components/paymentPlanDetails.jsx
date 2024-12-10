@@ -8,11 +8,12 @@ import {
 import { Button } from '@/components/ui/button';
 
 const PaymentPlanDetails = ({userId}) => {
-    const {data, error, isError} = FetchPaymentCheck(userId)
+    const {data, error, isError} = FetchPaymentCheck(userId);
   
     if (error) {
-      return <div className="error-message">You have not paid for any plan</div>;
+      return <div className="error-message">You have not paid for any plan</div>
     }
+
     console.log(error)
   
     return (
