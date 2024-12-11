@@ -15,6 +15,7 @@ const PaymentPlanDetails = ({ userId }) => {
     return <div>You have not paid for any plan</div>
   }
 
+  
   return (
     <Popover>
       <PopoverTrigger asChild>
