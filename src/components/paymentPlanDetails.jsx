@@ -1,4 +1,4 @@
-import FetchPaymentCheck from "../hooks/fetchPaymentCheck";
+import fetchPaymentCheck from "../hooks/fetchPaymentCheck";
 import Loader from "./loader";
 import {
   Popover,
@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/popover";
 import { Button } from '@/components/ui/button';
 
+
 const PaymentPlanDetails = ({userId}) => {
-    const {data, error, isError} = FetchPaymentCheck(userId);
+    const {data, error, isError} = fetchPaymentCheck(userId);
   
     if (error) {
       return <div className="error-message">You have not paid for any plan</div>
