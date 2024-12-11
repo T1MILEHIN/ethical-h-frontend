@@ -9,14 +9,12 @@ import { Button } from '@/components/ui/button';
 
 
 const PaymentPlanDetails = ({userId}) => {
-    const {data, error, isError} = fetchPaymentCheck(userId);
+    const {data, error} = fetchPaymentCheck(userId);
   
     if (error) {
       return <div className="error-message">You have not paid for any plan</div>
     }
 
-    console.log(error)
-  
     return (
       <div>
         <Popover>
