@@ -43,7 +43,7 @@ const Login = () => {
                     localStorage.setItem("tokens", JSON.stringify(response?.data));
                     localStorage.setItem("user", JSON.stringify(decoded));
                     navigate("/")
-                    toast.success("Welcome to X-SHARK")
+                    toast.success("Welcome to X-Shark")
                 }
             } catch (error) {
                 console.log(error)
