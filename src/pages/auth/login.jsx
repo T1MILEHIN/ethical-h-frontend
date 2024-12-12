@@ -16,6 +16,7 @@ import ThemeSwitch from "../../components/theme-switch";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
+import GoogleLogin from "./components/googleLogin";
 
 const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 
@@ -111,16 +112,16 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-        google.accounts.id.initialize({
-            client_id: google_auth_id,
-            callback: handleSignInWithGoogle,
-        });
-        google.accounts.id.renderButton(
-            document.getElementById('loginDiv'),
-            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
-        );
-    }, [])
+    // useEffect(() => {
+    //     google.accounts.id.initialize({
+    //         client_id: google_auth_id,
+    //         callback: handleSignInWithGoogle,
+    //     });
+    //     google.accounts.id.renderButton(
+    //         document.getElementById('loginDiv'),
+    //         { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
+    //     );
+    // }, [])
 
     if (user) return <Navigate to="/" />
 
