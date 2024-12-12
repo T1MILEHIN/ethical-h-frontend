@@ -1,4 +1,4 @@
-import{c as fs,r as P,j as X,a as Ui,B as Ki,P as Wi}from"./index-BCinptGL.js";/**
+import{c as fs,r as P,j as X,a as Ui,B as Ki,P as Wi}from"./index-EiLS302L.js";/**
  * @license @tabler/icons-react v3.20.0 - MIT
  *
  * This source code is licensed under the MIT license.
