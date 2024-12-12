@@ -26,7 +26,6 @@ const FetchComponent = (templateName) => {
                     const response = await axios.get(`http://127.0.0.1:8000/api/get-component/${queryKey[1]}`);
                     const componentCode = await response.data;
     
-                    console.log(`${queryKey[1].charAt(0).toUpperCase()}${queryKey[1].slice(1)}`)
                     const output = Babel.transform(componentCode, { presets: ["react", "env"] }).code;
     
                     const WrappedComponent = new Function("React", "Helmet", "useState", "useContext", "Link", "useNavigate", "axios", "useMutation", "useFormik", "toast", "Yup", "user", "token", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", "FcGoogle", "GrApple", "universalAccess", "paymentConfirmationUrl",`

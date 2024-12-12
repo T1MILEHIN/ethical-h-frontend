@@ -15,6 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import FetchAllPackages from '../../hooks/fetchAllPackages';
 import FetchAccountDetails from '../../hooks/fetchAccountDetails';
 import FetchPaymentStatus from '../../hooks/fetchPaymentStatus';
 import { AuthContext } from '../../context/authContext';
@@ -22,12 +23,29 @@ import { AuthContext } from '../../context/authContext';
 const Payment = () => {
   const { user } = useContext(AuthContext);
   const { data } = FetchAccountDetails()
-  const { data: status } = FetchPaymentStatus()
-  const [paymentPlan, setPaymentPlan] = useState("");
+  const { data: status } = FetchPaymentStatus();
+  const { data: packages } = FetchAllPackages();  
+  const [packageDetails, setPackageDetails] = useState({
+    selectedPackage: "", 
+    selectedPlan: "",
+  })
 
-  const handleSelectChange = (value) => {
-    setPaymentPlan(value);
-  }
+  const handlePackageChange = (value) => {
+    const selectedPackage = packages?.data?.find((pkg) => pkg.name === value);
+    if (selectedPackage) {
+      setPackageDetails((prevState) => ({
+        ...prevState,
+        selectedPackage: selectedPackage.name,
+      }));
+    }
+  };
+
+  const handlePlanChange = (value) => {
+    setPackageDetails((prevState) => ({
+      ...prevState,
+      selectedPlan: value,
+    }));
+  };
 
   return (
     <div className='py-10'>
@@ -37,14 +55,29 @@ const Payment = () => {
         :
         (
           <div className="md:w-[600px] w-[80%] mx-auto">
-            <h1 className='text-xl md:text-3xl my-4'>Select your Plan</h1>
-            <Select onValueChange={handleSelectChange}>
+            <h1 className='text-xl md:text-3xl my-4'>Select your package & Plan</h1>
+            <div className="mb-2">
+              <Select className="" onValueChange={handlePackageChange}>
+                <SelectTrigger className="w-full mx-auto">
+                  <SelectValue placeholder="Select a package" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Package</SelectLabel>
+                    {packages?.data?.map((pkg)=> (
+                      <SelectItem key={pkg.id} value={`${pkg.name}`}>{pkg.name}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <Select onValueChange={handlePlanChange}>
               <SelectTrigger className="w-full mx-auto">
-                <SelectValue placeholder="Select a your Plan" />
+                <SelectValue placeholder="Select a plan" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Plans</SelectLabel>
+                  <SelectLabel>Plan</SelectLabel>
                   <SelectItem value={`Weekly -- N${(data?.data?.weekly_plan)}`}>Weekly -- N{(data?.data?.weekly_plan)}</SelectItem>
                   <SelectItem value={`Monthly -- N${(data?.data?.monthly_plan)}`}>Monthly -- N{(data?.data?.monthly_plan)}</SelectItem>
                 </SelectGroup>
@@ -54,7 +87,7 @@ const Payment = () => {
               <PopoverTrigger asChild>
                 <Button className="w-full my-4">Pay</Button>
               </PopoverTrigger>
-              <PopoverContent className="w-96">
+              <PopoverContent className="md:w-[500px] w-96">
                 <div className="grid gap-4">
                   <div className="space-y-2">
                     <h4 className="font-medium leading-none">Payment Details</h4>
@@ -72,8 +105,12 @@ const Payment = () => {
                       <p>{data?.data?.account_name}</p>
                     </div>
                     <div className="grid grid-cols-3 items-center gap-4">
+                      <p>Package</p>
+                      <p>{packageDetails.selectedPackage || 'Select a package'}</p>
+                    </div>
+                    <div className="grid grid-cols-3 items-center gap-4">
                       <p>Payment Plan</p>
-                      <p>{paymentPlan || 'Select a plan'}</p>
+                      <p>{packageDetails.selectedPlan || 'Select a plan'}</p>
                     </div>
                     <div className="grid grid-cols-3 items-center gap-4">
                       <p>Telegram Link</p>

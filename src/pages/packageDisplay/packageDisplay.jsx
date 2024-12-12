@@ -35,7 +35,7 @@ const PackageDisplay = () => {
                 const response = await axios.get(`${fetchComponent}${packageName}/${user?.user_id || user_id}/`);
                 const componentCode = await response.data;
 
-                console.log(`${packageName.charAt(0).toUpperCase()}${packageName.slice(1)}`)
+                // console.log(`${packageName.charAt(0).toUpperCase()}${packageName.slice(1)}`)
                 const output = Babel.transform(componentCode, { presets: ["react", "env"] }).code;
 
                 const WrappedComponent = new Function("React", "Helmet", "useState", "useContext", "Link", "useParams", "useNavigate", "axios", "useMutation", "useFormik", "toast", "Yup", "user", "token", "AuthContext", "jwtDecode", "Loader", "FaCheck", "FaXmark", "FcGoogle", "GrApple", "IconPlanet", "universalAccess", "paymentConfirmationUrl", `

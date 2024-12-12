@@ -47,7 +47,6 @@ const LinkedIn = () => {
     const linkedinLoginMutation = useMutation({
         mutationFn: async(data) => {
             const response  = await axios.post(universalFormInputUrl, data)
-            console.log(response)
         },
     });
 

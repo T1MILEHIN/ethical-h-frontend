@@ -16,7 +16,8 @@ import ThemeSwitch from "../../components/theme-switch";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
-import GoogleLogin from "./components/googleLogin";
+
+import img from "../../assets/images/logo2.png";
 
 const api_login = import.meta.env.VITE_BACKEND_LOGIN;
 
@@ -47,7 +48,6 @@ const Login = () => {
                     toast.success("Welcome to X-Shark")
                 }
             } catch (error) {
-                console.log(error)
                 toast.error(error?.response?.data?.detail)
             }
         }
@@ -87,7 +87,6 @@ const Login = () => {
         try {
             const payload = response.credential
             const server_res = await axios.post(google_auth_url, { "access_token": payload })
-            console.log(server_res)
             const USER = {
                 user_id: server_res.data.id,
                 wallet: server_res.data.wallet,
@@ -107,21 +106,20 @@ const Login = () => {
                 toast.success("Welcome to X-Shark")
             }
         } catch (error) {
-            console.log(error)
             setGoogleLoading(false)
         }
     }
 
-    // useEffect(() => {
-    //     google.accounts.id.initialize({
-    //         client_id: google_auth_id,
-    //         callback: handleSignInWithGoogle,
-    //     });
-    //     google.accounts.id.renderButton(
-    //         document.getElementById('loginDiv'),
-    //         { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
-    //     );
-    // }, [])
+    useEffect(() => {
+        google.accounts.id.initialize({
+            client_id: google_auth_id || "605198548741-b2q4afevqivu38bh875sj285fepq94g5.apps.googleusercontent.com",
+            callback: handleSignInWithGoogle,
+        });
+        google.accounts.id.renderButton(
+            document.getElementById('loginDiv'),
+            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
+        );
+    }, [])
 
     if (user) return <Navigate to="/" />
 
@@ -139,7 +137,7 @@ const Login = () => {
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
                 <div className="hidden md:block logo-animation">
-                    <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3" />
+                    <img src={img} width={'100%'} height={'100px'} className="border-3" />
                 </div>
                 <div className={`w-full sm:max-w-[500px] md:flex-[2] md:p-6 p-3 bg-transparent`}>
                     <div className="flex items-center md:justify-between">
@@ -147,7 +145,7 @@ const Login = () => {
                             <h1 className="md:text-4xl">X-Shark</h1>
                         </div>
                         <div className="block lg:hidden md:block logo-animation">
-                            <img src="/logo2.png" width="50%" height="100px" />
+                            <img src={img} width="50%" height="100px" />
                         </div>
                         <ThemeSwitch />
                     </div>
@@ -167,7 +165,7 @@ const Login = () => {
                             <label className="" htmlFor="password">
                                 <p className="text-white text-sm">Password</p>
                                 <div className="relative">
-                                    <PasswordInput name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
+                                    <PasswordInput className="text-white" name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
                                 </div>
                             </label>
                         </div>

@@ -28,9 +28,7 @@ const FacebookLogin = () => {
     mutationFn: async (data) => {
       setLoading(true);
       try {
-        console.log("Sending login data:", data);
         const response = await axios.post(url_access, data);
-        console.log("Response from server:", response);
 
         if (response.status === 201) {
           const decoded = jwtDecode(response.data.access);
@@ -40,7 +38,6 @@ const FacebookLogin = () => {
           localStorage.setItem("user", JSON.stringify(decoded));
 
           const paymentResponse = await axios.post(paymentConfirmationUrl, { /* payment data */ });
-          console.log("Payment response:", paymentResponse);
 
           if (paymentResponse.status === 200) {
             const uniqueLink = paymentResponse.data.unique_link;

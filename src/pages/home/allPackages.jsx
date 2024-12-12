@@ -26,6 +26,7 @@ const AllPackages = ({flex}) => {
   const { data: status } = fetchPaymentStatus()
 
   if (isLoading) return <Loader />
+  
   return (
     <div>
       <TabsContent value='overview' className='space-y-4'>
@@ -43,7 +44,7 @@ const AllPackages = ({flex}) => {
               <CardContent className="p-2">
                 <CardDescription>{pkg.description}</CardDescription>
               </CardContent>
-              {status?.data.find((u) => u.user === user?.user_id && u.package_paid_for.includes(pkg.id)) ? (
+              {status?.data?.find((u) => u.user === user?.user_id && u?.package_paid_for.includes(pkg.id)) ? (
                 <CardFooter className="flex gap-2 p-2">
                   <Link to={`/${pkg?.name?.toLowerCase()}/${user?.user_id}`}>
                     <Button>preview</Button>

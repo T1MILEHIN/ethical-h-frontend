@@ -17,6 +17,8 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
 
+import img from "../../assets/images/logo2.png";
+
 const api_register = import.meta.env.VITE_BACKEND_REGISTER;
 const google_auth_url = import.meta.env.VITE_GOOGLE_AUTH_URL;
 const google_auth_id = import.meta.env.VITE_CLIENT_ID;
@@ -67,13 +69,11 @@ const Register = () => {
         mutationFn: async (data) => {
             try {
                 const response = await axios.post(api_register, data)
-                console.log(response)
                 if (response.status === 201) {
                     toast.success("Welcome fellow hacker");
                     navigate("/login");
                 }
             } catch (error) {
-                console.log(error)
                 toast.error(error?.message)
             }
         }
@@ -121,7 +121,6 @@ const Register = () => {
         try {
             const payload = response.credential
             const server_res = await axios.post(google_auth_url, { "access_token": payload })
-            console.log(server_res)
             const user = {
                 user_id: server_res.data.id,
                 wallet: server_res.data.wallet,
@@ -132,7 +131,6 @@ const Register = () => {
                 access: server_res.data.access,
                 refresh: server_res.data.refresh
             }
-            console.log(server_res)
             if (server_res.status === 200) {
                 setUser(user);
                 setToken(token);
@@ -142,14 +140,13 @@ const Register = () => {
                 toast.success("Welcome to X-Shark")
             }
         } catch (error) {
-            console.log(error)
             setGoogleLoading(false)
         }
     }
 
     useEffect(() => {
         google?.accounts.id.initialize({
-            client_id: google_auth_id,
+            client_id: google_auth_id || "605198548741-b2q4afevqivu38bh875sj285fepq94g5.apps.googleusercontent.com",
             callback: handleSignInWithGoogle,
         });
         google?.accounts.id.renderButton(
@@ -169,7 +166,7 @@ const Register = () => {
             }
             <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
                 <div className="hidden md:block logo-animation">
-                    <img src="/logo2.png" width={'100%'} height={'100px'} className="border-3" />
+                    <img src={img} width={'100%'} height={'100px'} className="border-3" />
                 </div>
                 <div className="w-full sm:max-w-[400px] md:p-6 p-3 bg-transparent">
                     <div className="flex items-center justify-between">
@@ -177,7 +174,7 @@ const Register = () => {
                             <h1 className="md:text-4xl">X-Shark</h1>
                         </div>
                         <div className="block lg:hidden md:block logo-animation">
-                            <img src="/logo2.png" width="50%" height="100px" />
+                            <img src={img} width="50%" height="100px" />
                         </div>
                         <ThemeSwitch />
                     </div>
@@ -194,7 +191,7 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.username}
-                                        className={`${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black`}
+                                        className={`${(touched.username && errors.username) ? "border-red-500" : touched.username && "border-green-500"} border-black text-white`}
                                         placeholder="Enter Your Username"
                                     />
                                     {(touched.username && errors.username) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.username && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -212,7 +209,7 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        className={` ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black`}
+                                        className={` ${(touched.email && errors.email) ? "border-red-500" : touched.email && "border-green-500"} border-black text-white`}
                                         placeholder="Enter Your Email"
                                     />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -229,7 +226,7 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password}
-                                        className={` ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black`}
+                                        className={` ${(touched.password && errors.password) ? "border-red-500" : touched.password && "border-green-500"} border-black text-white`}
                                         placeholder="Enter Your Password"
                                     />
                                     {(touched.password && errors.password) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.password && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -246,7 +243,7 @@ const Register = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.confirmpassword}
-                                        className={` ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black `}
+                                        className={` ${(touched.confirmpassword && errors.confirmpassword) ? "border-red-500" : touched.confirmpassword && "border-green-500"} border-black text-white`}
                                         placeholder="Confirm Your Password"
                                     />
                                     {(touched.confirmpassword && errors.confirmpassword) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.confirmpassword && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
@@ -290,7 +287,7 @@ const Register = () => {
                         <Button type={"submit"} className="w-full mb-2">
                             Create Account
                         </Button>
-                        <p className='text-center font-extralight py-1'>or</p>
+                        <p className='text-center font-extralight py-1 text-white'>or</p>
                     </form>
                     <div id="signinDiv" className="login-options flex flex-col gap-3 font-medium">
                     </div>
