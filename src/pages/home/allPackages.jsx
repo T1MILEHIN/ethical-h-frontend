@@ -25,6 +25,9 @@ const AllPackages = ({flex}) => {
   const { data, isLoading } = fetchAllPackages()
   const { data: status } = fetchPaymentStatus()
 
+  console.log(data)
+  console.log(status)
+  
   if (isLoading) return <Loader />
   
   return (
@@ -32,17 +35,24 @@ const AllPackages = ({flex}) => {
       <TabsContent value='overview' className='space-y-4'>
         <div className={`grid gap-4 grid-cols-1 sm:grid-cols-2`}>
           {data?.data.map((pkg) => (
-            <Card key={pkg.id} className="group">
+            <Card key={pkg.id} className="border-none">
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2 p-2'>
                 <div className='space-y-2'>
-                  <LazyLoadImage effect="blur" src={pkg.image} className='w-full rounded-sm z-10' alt="" />
-                  <CardTitle>
+                  <LazyLoadImage width={'100%'} effect="blur" src={pkg.image} className='w-full rounded-sm z-10' alt="" />
+                  <CardTitle className='py-1'>
                     {pkg.name}
                   </CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="p-2">
-                <CardDescription>{pkg.description}</CardDescription>
+                <div className='font-bold flex items-center gap-2'>
+                  <p>Weekly:</p>
+                  <CardDescription>{(+pkg.weekly_price).toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0})}</CardDescription>
+                </div>
+                <div className='font-bold flex items-center gap-2'>
+                  <p>Monthly:</p>
+                  <CardDescription>{(+pkg.monthly_price).toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0})}</CardDescription>
+                </div>
               </CardContent>
               {status?.data?.find((u) => u.user === user?.user_id && u?.package_paid_for.includes(pkg.id)) ? (
                 <CardFooter className="flex gap-2 p-2">
@@ -55,9 +65,9 @@ const AllPackages = ({flex}) => {
                 </CardFooter>
               ) :
                 (
-                  <CardFooter className="p-2">
-                    <Link to="/payments">
-                    <Button>Pay</Button>
+                  <CardFooter className="flex p-2">
+                    <Link className='w-full' to="/payments">
+                    <Button className="w-full">Pay</Button>
                     </Link>
                   </CardFooter>
                 )}

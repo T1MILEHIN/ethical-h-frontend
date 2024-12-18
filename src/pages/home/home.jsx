@@ -31,9 +31,9 @@ const Home = () => {
       <div className='z-[999999999999] fixed right-2 bottom-2'>
         <PaymentPlanDetails userId={user?.user_id}/>
       </div>
-      <Layout>
+      <Layout className="">
         {/* ===== Top Heading ===== */}
-        <Layout.Header>
+        <Layout.Header className='md:px-8 px-2'>
           <TopNav links={topNav} />
           <div className='ml-auto flex items-center space-x-4'>
             <Search />
@@ -42,7 +42,7 @@ const Home = () => {
           </div>
         </Layout.Header>
         {/* ===== Main ===== */}
-        <Layout.Body>
+        <Layout.Body className='md:px-8 px-2 py-2'>
           <div className='mb-2 flex items-center justify-between space-y-2'>
             <h1 className='text-2xl font-bold tracking-tight'>
               {pathname === "/" && "Dashboard"}
@@ -101,7 +101,7 @@ const Home = () => {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold'>{data?.data.length}</div>
+                    <div className='text-2xl font-bold'>{data?.data.length || '0'}</div>
                     <p className='text-xs text-muted-foreground'>
                       Number of people that have used your link
                     </p>
@@ -126,13 +126,12 @@ const Home = () => {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold'>{packages?.data.length}</div>
+                    <div className='text-2xl font-bold'>{packages?.data.length || '0'}</div>
                     <p className='text-xs text-muted-foreground'>
                       Packages Available
                     </p>
                   </CardContent>
                 </Card>
-      
               </div>
               <Outlet />
             </TabsContent>

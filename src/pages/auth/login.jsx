@@ -16,6 +16,8 @@ import ThemeSwitch from "../../components/theme-switch";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import img from "../../assets/images/logo2.png";
 
@@ -117,7 +119,7 @@ const Login = () => {
         });
         google.accounts.id.renderButton(
             document.getElementById('loginDiv'),
-            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
+            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'square' }
         );
     }, [])
 
@@ -136,16 +138,16 @@ const Login = () => {
                     className: 'my-toast',
                 }} />
             <motion.section className="login overflow-hidden min-h-screen md:px-20 md:pt-10 flex items-end md:items-center justify-center">
-                <div className="hidden md:block logo-animation">
-                    <img src={img} width={'100%'} height={'100px'} className="border-3" />
+                <div className="hidden lg:block logo-animation">
+                    <LazyLoadImage effect="blur" src={img} width={'100%'} height={'100%'} className="border-3" />
                 </div>
-                <div className={`w-full sm:max-w-[500px] md:flex-[2] md:p-6 p-3 bg-transparent`}>
+                <div className={`w-full sm:max-w-[500px] md:flex-[2] md:p-6 p-5 bg-transparent`}>
                     <div className="flex items-center md:justify-between">
                         <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
                             <h1 className="md:text-4xl">X-Shark</h1>
                         </div>
                         <div className="block lg:hidden md:block logo-animation">
-                            <img src={img} width="50%" height="100px" />
+                            <LazyLoadImage effect="blur" src={img} width="50%" height="100px" />
                         </div>
                         <ThemeSwitch />
                     </div>
@@ -154,16 +156,16 @@ const Login = () => {
                     <form onSubmit={handleFormSubmit}>
                         <div className="my-2">
                             <label className="" htmlFor="email">
-                                <p className="text-white text-sm">Email</p>
+                                <p className="text-white text-sm mb-2">Email</p>
                                 <div className="relative">
-                                    <Input name="email" id="email" value={values.email} onChange={handleChange} type="text" placeholder='1234567@gmail.com' />
+                                    <Input className="text-white" name="email" id="email" value={values.email} onChange={handleChange} type="text" placeholder='1234567@gmail.com' />
                                     {(touched.email && errors.email) ? <FaXmark color="red" className="absolute right-4 top-1/2 -translate-y-1/2" /> : touched.email && <FaCheck color="green" className="absolute right-4 top-1/2 -translate-y-1/2" />}
                                 </div>
                             </label>
                         </div>
                         <div className="my-2">
                             <label className="" htmlFor="password">
-                                <p className="text-white text-sm">Password</p>
+                                <p className="text-white text-sm mb-2">Password</p>
                                 <div className="relative">
                                     <PasswordInput className="text-white" name="password" id="password" value={values.password} onChange={handleChange} placeholder='Password' />
                                 </div>
@@ -171,9 +173,11 @@ const Login = () => {
                         </div>
                         <p className="text-right my-2 font-light text-white text-xs"><Link to="/forgotPassword">Forgot Password?</Link></p>
                         <Button type="submit" className="w-full">{"Login"}</Button>
-                        <p className='text-center font-extralight py-1'>or</p>
+                        <p className='text-sm text-center font-extralight py-1 text-white'>or</p>
                     </form>
-                    <div id="loginDiv" className='login-options flex flex-col gap-3 font-medium'></div>
+                    <div className="flex">
+                        <div id="loginDiv" className='flex-1 login-options w-full'></div>
+                    </div>
                     <p className="text-xs mt-4 font-light text-white jost">Don&apos;t have an account? <Link className="underline underline-offset-2 text-blue-500" to="/register">Create Account</Link></p>
                 </div>
             </motion.section>

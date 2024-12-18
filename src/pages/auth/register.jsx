@@ -18,6 +18,8 @@ import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/custom/password-input";
 
 import img from "../../assets/images/logo2.png";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const api_register = import.meta.env.VITE_BACKEND_REGISTER;
 const google_auth_url = import.meta.env.VITE_GOOGLE_AUTH_URL;
@@ -151,7 +153,7 @@ const Register = () => {
         });
         google?.accounts.id.renderButton(
             document.getElementById('signinDiv'),
-            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'circle' }
+            { theme: 'outline', size: 'large', text: 'continue_with', shape: 'square' }
         );
     }, [])
 
@@ -165,16 +167,16 @@ const Register = () => {
                 </div>
             }
             <motion.section className="register overflow-hidden min-h-screen flex items-end md:items-center justify-center">
-                <div className="hidden md:block logo-animation">
-                    <img src={img} width={'100%'} height={'100px'} className="border-3" />
+                <div className="hidden lg:block logo-animation">
+                    <LazyLoadImage effect="blur" src={img} width={'100%'} height={'100px'} className="border-3" />
                 </div>
-                <div className="w-full sm:max-w-[400px] md:p-6 p-3 bg-transparent">
+                <div className="w-full sm:max-w-[400px] md:p-6 px-3 pb-2 bg-transparent">
                     <div className="flex items-center justify-between">
                         <div className="hidden lg:block text-2xl font-bold tracking-tight text-white">
                             <h1 className="md:text-4xl">X-Shark</h1>
                         </div>
                         <div className="block lg:hidden md:block logo-animation">
-                            <img src={img} width="50%" height="100px" />
+                            <LazyLoadImage effect="blur" src={img} width="50%" height="50px" />
                         </div>
                         <ThemeSwitch />
                     </div>
@@ -182,7 +184,7 @@ const Register = () => {
                     <form onSubmit={handleFormSubmit}>
                         <div className="">
                             <label className="font-light" htmlFor="username">
-                                <p className="text-white text-sm">Username</p>
+                                <p className="text-white text-sm mb-2">Username</p>
                                 <div className="relative">
                                     <Input
                                         name="username"
@@ -200,7 +202,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="email">
-                                <p className="text-white text-sm">Email Address</p>
+                                <p className="text-white text-sm mb-2">Email Address</p>
                                 <div className="relative">
                                     <Input
                                         type="text"
@@ -218,7 +220,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="password">
-                                <p className="text-white text-sm">Password</p>
+                                <p className="text-white text-sm mb-2">Password</p>
                                 <div className="relative">
                                     <PasswordInput
                                         name="password"
@@ -235,7 +237,7 @@ const Register = () => {
                         </div>
                         <div className="my-2">
                             <label className="font-light" htmlFor="confirmpassword">
-                                <p className="text-white text-sm">Confirm-password</p>
+                                <p className="text-white text-sm mb-2">Confirm-password</p>
                                 <div className="relative">
                                     <PasswordInput
                                         name="confirmpassword"
@@ -284,12 +286,13 @@ const Register = () => {
                                     </motion.div>
                                 </motion.div>}
                         </AnimatePresence>
-                        <Button type={"submit"} className="w-full mb-2">
+                        <Button type={"submit"} className="w-full">
                             Create Account
                         </Button>
-                        <p className='text-center font-extralight py-1 text-white'>or</p>
+                        <p className='text-sm text-center font-extralight py-1 text-white'>or</p>
                     </form>
-                    <div id="signinDiv" className="login-options flex flex-col gap-3 font-medium">
+                    <div className="w-full flex">
+                        <div id="signinDiv" className="flex-1 login-options"></div>
                     </div>
                     <p className="text-xs mt-4 font-medium text-white jost">
                         Already have an account?{" "}

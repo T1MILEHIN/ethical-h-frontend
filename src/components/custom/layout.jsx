@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const LayoutContext = React.createContext(null)
 
-
 const Layout = ({ className, fixed = false, ...props }) => {
     const divRef = React.useRef(null)
     const [offset, setOffset] = React.useState(0)

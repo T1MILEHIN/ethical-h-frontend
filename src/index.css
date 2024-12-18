@@ -73,6 +73,7 @@
   position: relative;
   font-family: "Poppins", sans-serif;
   background-image: url(./assets/images/form-bg.jpg);
+  background-position: center;
   background-size: cover;
   z-index: 2;
 }
@@ -81,7 +82,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.822);
+  background-color: rgba(0, 0, 0, 0.6);
   color: #f5f5f5;
   z-index: -1;
 }

@@ -49,7 +49,6 @@ const PackageDisplay = () => {
                 setLoading(false)
                 if (user) {
                     toast.error(error?.response?.data?.message)
-                    navigate(-1)
                 }    
             }
         }

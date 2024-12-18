@@ -8,7 +8,6 @@ import {
 
 
 const PaymentPlanDetails = ({ userId }) => {
-
   const { data, error } = fetchPaymentCheck(userId);
 
   if (error) {
@@ -20,14 +19,14 @@ const PaymentPlanDetails = ({ userId }) => {
       <PopoverTrigger asChild>
         <Button>Show Details</Button>
       </PopoverTrigger>
-      < PopoverContent className="md:w-[500px] w-[300px]">
+      < PopoverContent className="md:w-[500px] w-[360px] p-2">
         <div className="relative bg-opacity-70 p-3 rounded-tl-lg space-y-2">
           <h2 className="text-lg font-bold">Payment Plan Details</h2>
           <p><strong>User:</strong> {data?.data?.user}</p>
           <p><strong>Plan Type:</strong> {data?.data?.plan_type}</p>
           <p><strong>Packages</strong></p>
           <ul className="list-disc list-inside">
-            {data?.data.package?.map((pkg)=> (
+            {data?.data.packages?.map((pkg)=> (
               <li key={pkg.id}>{pkg.name}</li>
             ))}
           </ul>
